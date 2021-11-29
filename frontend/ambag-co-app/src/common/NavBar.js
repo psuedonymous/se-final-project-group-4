@@ -26,7 +26,7 @@ export function NavBar() {
           </Nav>
           <SearchBar placeholder="Search" />
           <Nav>
-              <Link to="/cart" className="nav-link">
+              <Link to="/shop-bag" className="nav-link">
                 <span> <i className='fas fa-shopping-bag fa-lg'></i> </span>
               </Link>
           </Nav>
