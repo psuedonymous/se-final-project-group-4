@@ -1,0 +1,17 @@
+.form-control {
+    border-radius: 10px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.search-btn {
+    border-radius: 10px;
+    background: rgb(186, 198, 243, 0.7);
+    color: rgba(65, 102, 234, 0.8);; 
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.search-btn:hover {
+    color: white;
+}

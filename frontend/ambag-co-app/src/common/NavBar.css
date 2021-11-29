@@ -1,4 +1,26 @@
-
 .bg-blue {
     background-color: rgba(65, 102, 234, 0.5);
+}
+
+.nav-link:hover {
+    font-weight: 900;
+    color: aliceblue!important;
+    background-color: rgba(65, 102, 234, 0.08);
+    border-radius: 10px;
+    transition: all 0.3s ease-out;
+}
+
+.nav-drop-link:hover {
+    background: transparent;
+    color: rgba(65, 102, 234, 0.5)!important;
+    left: auto !important;
+    right: 0 !important;
+} 
+
+.dropdown:hover > .dropdown-menu {
+  display: block;
+  left: auto;
+}
+.dropdown > .dropdown-toggle:active {
+  pointer-events: none;
 }
