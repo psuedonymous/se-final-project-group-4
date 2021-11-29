@@ -1,3 +1,17 @@
+@media screen and (min-width: 360px) {
+  .nav-link {
+    font-size: calc(11px + 3 * ((100vw - 360px) / 640));
+    margin-left: 3px;
+  }
+}
+
+@media screen and (min-width: 1045px) {
+  .nav-link {
+    font-size: 16px;
+    margin-left: 15px;
+  }
+}
+
 .bg-blue {
     background-color: rgba(65, 102, 234, 0.5);
 }
