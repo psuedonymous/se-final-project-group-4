@@ -1,24 +1,29 @@
 import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import CatalogPage from './pages/CatalogPage'
+import MyPurchasePage from './pages/MyPurchasePage';
+import InboxPage from './pages/InboxPage';
+import AboutUsPage from './pages/AboutUsPage';
+import ShopBagPage from './pages/ShopBagPage';
+import MyProfilePage from './pages/MyProfilePage';
+import MyDonationPage from './pages/MyDonationPage'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/catalog" element={<CatalogPage />} />
+        <Route path="/my-purchase" element={<MyPurchasePage />} />
+        <Route path="/inbox" element={<InboxPage />} />
+        <Route path="/about-us" element={<AboutUsPage />} />
+        <Route path="/shop-bag" element={<ShopBagPage />} />
+        <Route path="/my-profile" element={<MyProfilePage />} />
+        <Route path="/my-donation" element={<MyDonationPage />} />
+      </Routes>
+  </BrowserRouter>
   );
 }
 
