@@ -4,7 +4,8 @@
   "description": "Final Project repository of Group 4",
   "main": "index.js",
   "scripts": {
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,7 @@
   },
   "homepage": "https://github.com/psuedonymous/se-final-project-group-4#readme",
   "devDependencies": {
+    "husky": "^7.0.4",
     "jest": "^27.4.3"
   }
 }
