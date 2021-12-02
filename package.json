@@ -1,0 +1,22 @@
+{
+  "name": "se-final-project-group-4",
+  "version": "1.0.0",
+  "description": "Final Project repository of Group 4",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/psuedonymous/se-final-project-group-4.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/psuedonymous/se-final-project-group-4/issues"
+  },
+  "homepage": "https://github.com/psuedonymous/se-final-project-group-4#readme",
+  "devDependencies": {
+    "jest": "^27.4.3"
+  }
+}
