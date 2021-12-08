@@ -4,7 +4,7 @@ import { useState } from 'react';
 import PostApi from '../apis/Post-api';
 
 function Popup({closePopup}) {
-
+  //to update with additional attributes, apply bootstrap and css
   const[itemName, setItemName] = useState('');
   const[itemPrice, setItemPrice] = useState(0);
   const[expiry, setExpiry] = useState();
