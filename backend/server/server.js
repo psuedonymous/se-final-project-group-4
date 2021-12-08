@@ -29,11 +29,12 @@ app.get('/getItems', (req, res) => {
 //endpoint for posting a new item
 app.post('/postItem', (req,res) => {
   new Promise((resolve, reject) => {
+    //to update with new attributes
     const result = db.query
     ("INSERT INTO items(item_name, item_price, item_exp_date, item_charity, item_desc) VALUES($1, $2, $3, $4, $5) RETURNING *",
     [req.body.item_name, req.body.item_price, req.body.item_exp_date, req.body.item_charity, req.body.item_desc]);
     resolve(result);
-  }).then((result) => console.log(result)) //to remove console.log
+  }).then((result) => console.log(result)) //to chain with INSERT query for donations
 
   res.status(200).json({
     status: "success"
