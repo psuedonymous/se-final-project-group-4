@@ -1,10 +1,10 @@
-
-import React from 'react';
-import { useState } from 'react';
 import PostApi from '../apis/Post-api';
+import { useState } from 'react';
+import Popup from '../common/Popup';
+import React from 'react'
 
-function Popup({closePopup}) {
-  //to update with additional attributes, apply bootstrap and css
+export default function PostItem({popupButton}) {
+
   const[itemName, setItemName] = useState('');
   const[itemPrice, setItemPrice] = useState(0);
   const[expiry, setExpiry] = useState();
@@ -26,11 +26,12 @@ function Popup({closePopup}) {
   }
 
   return (
+    <>
     <div>
-      <React.Fragment>
-          <button onClick={()=> closePopup(false)}>X</button>
+    <Popup>
+    <button onClick={()=> popupButton(false)}>X</button>
 
-          <input type="text" placeholder="Item name" 
+      <input type="text" placeholder="Item name" 
           value = {itemName}
           onChange={(e)=> setItemName(e.target.value)}>
           </input>
@@ -56,11 +57,9 @@ function Popup({closePopup}) {
            </input>
 
            <button onClick={handlePost} type="submit">Post</button>
-      </React.Fragment>
+           </Popup>
     </div>
+    </>
   )
 }
-
-export default Popup;
-
 
