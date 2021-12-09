@@ -1,16 +1,15 @@
-import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import HomePage from './pages/HomePage';
-import CatalogPage from './pages/CatalogPage'
-import MyPurchasePage from './pages/MyPurchasePage';
-import InboxPage from './pages/InboxPage';
-import AboutUsPage from './pages/AboutUsPage';
-import ShopBagPage from './pages/ShopBagPage';
-import MyProfilePage from './pages/MyProfilePage';
-import MyDonationPage from './pages/MyDonationPage'
+import HomePage from './views/HomePage';
+import CatalogPage from './views/CatalogPage'
+import MyPurchasePage from './views/MyPurchasePage';
+import InboxPage from './views/InboxPage';
+import AboutUsPage from './views/AboutUsPage';
+import ShopBagPage from './views/ShopBagPage';
+import MyProfilePage from './views/MyProfilePage';
+import MyShopPage from './views/my-shop/MyShopPage'
 
-function App() {
+export default function App() {
   return (
     <BrowserRouter>
       <Routes>
@@ -21,10 +20,8 @@ function App() {
         <Route path="/about-us" element={<AboutUsPage />} />
         <Route path="/shop-bag" element={<ShopBagPage />} />
         <Route path="/my-profile" element={<MyProfilePage />} />
-        <Route path="/my-donation" element={<MyDonationPage />} />
+        <Route path="/my-shop" element={<MyShopPage />} />
       </Routes>
   </BrowserRouter>
   );
 }
-
-export default App;
