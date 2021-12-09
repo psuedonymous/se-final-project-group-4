@@ -1,10 +1,10 @@
 import { NavBar } from "../common/NavBar";
 
-export default function MyDonationPage() {
+export default function MyShopPage() {
     return(
         <>
             <NavBar/>
-            <div>My Donation Page</div>
+            <div>My Shop Page</div>
         </>
     )
 }

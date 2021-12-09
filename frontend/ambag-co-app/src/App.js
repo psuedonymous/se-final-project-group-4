@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
@@ -8,7 +7,7 @@ import InboxPage from './pages/InboxPage';
 import AboutUsPage from './pages/AboutUsPage';
 import ShopBagPage from './pages/ShopBagPage';
 import MyProfilePage from './pages/MyProfilePage';
-import MyDonationPage from './pages/MyDonationPage'
+import MyShopPage from './pages/MyShopPage'
 
 function App() {
   return (
@@ -21,7 +20,7 @@ function App() {
         <Route path="/about-us" element={<AboutUsPage />} />
         <Route path="/shop-bag" element={<ShopBagPage />} />
         <Route path="/my-profile" element={<MyProfilePage />} />
-        <Route path="/my-donation" element={<MyDonationPage />} />
+        <Route path="/my-shop" element={<MyShopPage />} />
       </Routes>
   </BrowserRouter>
   );

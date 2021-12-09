@@ -15,11 +15,6 @@ export const MenuItems = [
         cName: 'nav-link'
     },
     {
-        title: 'Inbox',
-        url: '/inbox',
-        cName: 'nav-link'
-    },
-    {
         title: 'About Us',
         url: '/about-us',
         cName: 'nav-link'
