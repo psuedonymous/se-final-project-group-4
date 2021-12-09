@@ -1,9 +1,14 @@
+import { useState } from "react";
 import { Items } from "../../assets/Items";
 import { NavBar } from "../../components/NavBar";
 import { MyItemCard } from "./MyItemCard";
+import PostItem from "./PostItem";
 import './MyShopPage.css';
 
+
 export default function MyShopPage() {
+  const [PostButton, setPostButton] = useState(false);
+  
     return (
         <>
             <NavBar />
@@ -19,7 +24,8 @@ export default function MyShopPage() {
                     })}
                 </div>
            </section>
-           <button className="btn post-item-btn">+</button>
+           <button onClick={()=> setPostButton(true)} className="btn post-item-btn">+</button>
+           {PostButton && <PostItem popupButton={setPostButton}/>}
         </>
     )
 }
