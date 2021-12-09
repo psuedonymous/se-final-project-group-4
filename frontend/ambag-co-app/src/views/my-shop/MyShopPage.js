@@ -1,9 +1,9 @@
-import { NavBar } from "../common/NavBar";
+import { NavBar } from "../../components/NavBar";
 
 export default function MyShopPage() {
     return(
         <>
-            <NavBar/>
+            <NavBar />
             <div>My Shop Page</div>
         </>
     )

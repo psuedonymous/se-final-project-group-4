@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
-import { MenuItems } from './MenuItems';
+import { MenuItems } from '../assets/MenuItems';
 import SearchBar from './SearchBar';
 import './NavBar.css';
 

@@ -1,6 +1,6 @@
-import PostApi from '../apis/Post-api';
+import PostApi from '../../apis/Post-api';
 import { useState } from 'react';
-import Popup from '../common/Popup';
+import Popup from '../components/Popup';
 import React from 'react'
 
 export default function PostItem({popupButton}) {

@@ -1,15 +1,15 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import HomePage from './pages/HomePage';
-import CatalogPage from './pages/CatalogPage'
-import MyPurchasePage from './pages/MyPurchasePage';
-import InboxPage from './pages/InboxPage';
-import AboutUsPage from './pages/AboutUsPage';
-import ShopBagPage from './pages/ShopBagPage';
-import MyProfilePage from './pages/MyProfilePage';
-import MyShopPage from './pages/MyShopPage'
+import HomePage from './views/HomePage';
+import CatalogPage from './views/CatalogPage'
+import MyPurchasePage from './views/MyPurchasePage';
+import InboxPage from './views/InboxPage';
+import AboutUsPage from './views/AboutUsPage';
+import ShopBagPage from './views/ShopBagPage';
+import MyProfilePage from './views/MyProfilePage';
+import MyShopPage from './views/my-shop/MyShopPage'
 
-function App() {
+export default function App() {
   return (
     <BrowserRouter>
       <Routes>
@@ -25,5 +25,3 @@ function App() {
   </BrowserRouter>
   );
 }
-
-export default App;

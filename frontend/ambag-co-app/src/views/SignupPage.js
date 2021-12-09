@@ -1,12 +1,9 @@
 import { Form, Container, Row, Col } from "react-bootstrap"
 import { Link } from "react-router-dom"
-import { NavBar } from "../navBar/navbar";
 
-export function SignupForm() {
-
+export default function SignupPage() {
     return (
-        <div style={{background:'linear-gradient(to bottom, #33ccff 0%, #ff99cc 100%)', minHeight:'100vh'}}>
-            <NavBar/>
+        <div style={{ background: 'linear-gradient(to bottom, #33ccff 0%, #ff99cc 100%)', minHeight: '100vh' }}>
             <Container>
                 <Row className='justify-content-center'>
                     <Col sm={4}>
@@ -34,15 +31,13 @@ export function SignupForm() {
                             </div>
 
                             <Row className='justify-content-center' xs={2}>
-                            <button type="submit" className="btn btn-dark btn-lg mt-3">Create Account</button>
+                                <button type="submit" className="btn btn-dark btn-lg mt-3">Create Account</button>
                             </Row>
                             <p className="text-center mt-2"> Already Registered?<Link to='/login'> Log in here</Link> </p>
                         </Form>
                     </Col>
                 </Row>
             </Container>
-
         </div>
     );
-
 }
