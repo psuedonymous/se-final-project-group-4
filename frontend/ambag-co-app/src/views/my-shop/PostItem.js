@@ -8,8 +8,9 @@ export default function PostItem({popupButton}) {
   const[itemName, setItemName] = useState('');
   const[itemPrice, setItemPrice] = useState(0);
   const[expiry, setExpiry] = useState();
-  const[charity, setCharity] = useState('');
+  const[charity, setCharity] = useState(1);
   const[description, setDescription] = useState('');
+  const[category, setCategory] = useState();
 
   const handlePost = (e) =>{
     e.preventDefault()
@@ -19,7 +20,11 @@ export default function PostItem({popupButton}) {
       item_price: itemPrice,
       item_exp_date: expiry,
       item_charity: charity,
-      item_desc: description
+      item_desc: description,
+      cat_id: category,
+      shop_id: 1, //to update when sign in & signup is done
+      don_dot: '2020-12-12', //to update
+      item_date_posted: '2020-12-12' //to update
     })
     resolve(response)
   }).then((response) => console.log(response))
@@ -46,10 +51,24 @@ export default function PostItem({popupButton}) {
           onChange={(e)=> setExpiry(e.target.value)}>
           </input>
 
-          <input type="text" placeholder="Charity" 
-          value = {charity} 
-          onChange={(e)=> setCharity(e.target.value)}>
-          </input>
+          {/* value not changing on select, to update */}
+          <label>Charity</label>
+          <select>
+            <option value={1} onChange={(e)=> setCharity(e.target.value)}>Share an Opportunity</option>
+          </select>
+
+          {/* value not changing on select, to update */}
+          <label>Category</label>
+          <select value = {category} onChange={(e)=>setCategory(e.target.value)}>
+            <option value={1} onChange={(e)=> setCategory(e.target.value)}>Apparel</option>
+            <option value={2} onChange={(e)=> setCategory(e.target.value)}>Gadgets</option>
+            <option value={3} onChange={(e)=> setCategory(e.target.value)}>Stationery</option>
+            <option value={4} onChange={(e)=> setCategory(e.target.value)}>Appliances</option>
+            <option value={5} onChange={(e)=> setCategory(e.target.value)}>Groceries</option>
+            <option value={6} >Toys</option>
+            <option value={7} onChange={(e)=> setCategory(e.target.value)}>Accessories</option>
+            <option value={8} onChange={(e)=> setCategory(e.target.value)}>Health</option>
+          </select>
 
           <input type="text" placeholder="description"
            value = {description} 
