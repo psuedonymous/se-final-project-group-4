@@ -1,13 +1,13 @@
 {
-  "name": "backend",
+  "name": "server",
   "version": "1.0.0",
-  "description": "backend directory",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
     "server": "nodemon server.js"
   },
-  "type": "module",
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
