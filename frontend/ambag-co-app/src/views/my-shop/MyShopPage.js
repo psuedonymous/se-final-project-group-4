@@ -13,12 +13,13 @@ export default function MyShopPage() {
                 </div>
             </div>
            <section className="container">
-           <div className="row justify-content-center">
-                {Items.map((item) => {
-                    return (<MyItemCard img={item.img} name={item.name} price={item.price} />)
-                })}
-            </div>
+                <div className="row justify-content-center">
+                    {Items.map((item) => {
+                        return (<MyItemCard img={item.img} name={item.name} price={item.price} />)
+                    })}
+                </div>
            </section>
+           <button className="btn post-item-btn">+</button>
         </>
     )
 }
