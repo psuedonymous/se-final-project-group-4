@@ -1,0 +1,28 @@
+.popup {
+    top: 35%;
+}
+
+.close-btn {
+    color: white !important;
+    position: absolute;
+    top: 0px;
+    right: 3px;
+}
+
+.close-btn:hover {
+    font-weight: 900;
+}
+
+.save-btn  {
+    border: none;
+    height: 30px;
+    color: white;
+    font-weight: 500;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), rgba(65, 102, 234, 0.7);
+}
+
+.save-btn:hover {
+    color: white;
+    transition: all 0.3s ease-out;
+    font-weight: 800;
+}
