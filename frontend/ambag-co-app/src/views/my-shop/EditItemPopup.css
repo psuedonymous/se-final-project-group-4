@@ -1,5 +1,5 @@
-.popup-inner {
-    background-color: red;
+.popup {
+    top: 35%;
 }
 
 .close-btn {
@@ -13,22 +13,16 @@
     font-weight: 900;
 }
 
-.popup-btn  {
+.save-btn  {
     border: none;
+    height: 30px;
     color: white;
-    background-color: transparent;
     font-weight: 500;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), rgba(65, 102, 234, 0.7);
 }
 
-.popup-btn:hover {
-    color: black;
-    background-color: white;
+.save-btn:hover {
+    color: white;
     transition: all 0.3s ease-out;
     font-weight: 800;
-}
-
-.popup-message {
-    color: white !important;
-    font-weight: 600; 
-    text-align: center;
 }

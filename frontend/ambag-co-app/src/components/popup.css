@@ -1,16 +1,45 @@
-.popup {
+@media screen and (min-width: 260px) {
+    .popup {
+        width: 80%;
+        left: 12%;
+    }
+    .popup-inner {
+        padding: 30px;
+    }
+}
+
+@media screen and (min-width: 576px) {
+    .popup {
+        width: 60%;
+        left: 23%
+    }
+    .popup-inner {
+        padding: 30px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .popup {
+        width: 50%;
+        left: 27%;
+    }
+    .popup-inner {
+        padding: 50px;
+    }
+}
+
+.popup { 
     position: fixed;
-    top: 40%;
-    left: 27%;
-    width: 50%;
+    top: 50%;
     height: 30vh;
     z-index: 1;
 }
 
 .popup-inner {
     position: relative;
-    padding: 50px;
     width: 100%;
     justify-content: center;
     align-items: center;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), rgba(160, 179, 244, 0.9) !important;
 }
