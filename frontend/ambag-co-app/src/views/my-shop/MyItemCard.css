@@ -2,17 +2,6 @@
     background: rgba(230, 230, 230, 0.5);
 }
 
-
-.nav-link-edit .nav-link-delete {
-    text-decoration: none;
-    color: rgb(109, 107, 107, 0.7);
-}
-
-.nav-link:hover {
-    color: black;
-    background-color: transparent !important;
-}
-
 .img-box {
     width: 70%;
     align-self: center;

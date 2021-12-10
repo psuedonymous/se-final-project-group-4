@@ -4,9 +4,12 @@ import { NavBar } from "../../components/NavBar";
 import { MyItemCard } from "./MyItemCard";
 import PostItem from "./PostItem";
 import './MyShopPage.css';
+import { useState } from "react";
+import PostItem from "./PostItem";
 
 
 export default function MyShopPage() {
+
   const [PostButton, setPostButton] = useState(false);
   
     return (
@@ -24,8 +27,10 @@ export default function MyShopPage() {
                     })}
                 </div>
            </section>
-           <button onClick={()=> setPostButton(true)} className="btn post-item-btn">+</button>
-           {PostButton && <PostItem popupButton={setPostButton}/>}
+
+           <button className="btn post-item-btn" onClick={()=>setPostButton(true)}>+</button>
+            {PostButton && <PostItem popupButton={setPostButton}/>}
+
         </>
     )
 }
