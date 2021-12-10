@@ -35,7 +35,7 @@ export default function PostItem({popupButton}) {
     <>
     <div>
     <Popup>
-          <button onClick={()=> popupButton(false)}>X</button>
+          <button onClick={()=> popupButton(false)} className='btn close-btn'>X</button>
 
           <input type="text" placeholder="Item name" 
             value = {itemName}
@@ -76,7 +76,7 @@ export default function PostItem({popupButton}) {
             onChange={(e)=> setDescription(e.target.value)}>
           </input>
 
-          <button onClick={handlePost} type="submit">Post</button>
+          <button onClick={handlePost} type="submit" className='save-btn col-3 ms-auto'>Post</button>
     </Popup>
     </div>
     </>

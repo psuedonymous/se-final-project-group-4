@@ -4,8 +4,6 @@ import { NavBar } from "../../components/NavBar";
 import { MyItemCard } from "./MyItemCard";
 import PostItem from "./PostItem";
 import './MyShopPage.css';
-import { useState } from "react";
-import PostItem from "./PostItem";
 
 
 export default function MyShopPage() {
