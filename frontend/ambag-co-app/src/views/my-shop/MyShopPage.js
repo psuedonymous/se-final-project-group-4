@@ -17,6 +17,7 @@ export default function MyShopPage() {
                     My Items
                 </div>
             </div>
+           
            <section className="container">
                 <div className="row justify-content-center">
                     {Items.map((item) => {
@@ -24,7 +25,7 @@ export default function MyShopPage() {
                     })}
                 </div>
            </section>
-           <button onClick={()=> setPostButton(true)} className="btn post-item-btn">+</button>
+           <button  className="btn post-item-btn" onClick={()=> setPostButton(true)}>+</button>
            {PostButton && <PostItem popupButton={setPostButton}/>}
         </>
     )
