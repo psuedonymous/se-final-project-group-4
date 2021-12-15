@@ -5,9 +5,11 @@ import EditItemPopup from "./EditItemPopup";
 import './MyItemCard.css';
 
 export function MyItemCard(props) {
+
     const [DeleteButton, setDeleteButton] = useState(false);
     const [EditButton, setEditButton] = useState(false);
-
+    const [itemKey, setItemKey] = useState();    
+    
     return (
         <div className="col-5 col-md-3 col-lg-3">
             <Card className="m-3 col-12 item-card h-10vw shadow">
@@ -17,11 +19,11 @@ export function MyItemCard(props) {
                             <span><i className='fas fa-ellipsis-v'></i></span>} align="end">
                             <NavDropdown.Item>
                                 <button className="btn edit-btn"
-                                    onClick={()=> setEditButton(true)}>Edit</button>
+                                    onClick={()=> {setEditButton(true); setItemKey(props.id)}}>Edit</button>
                             </NavDropdown.Item>
                             <NavDropdown.Item>
                                 <button className="btn delete-btn" 
-                                    onClick={()=> setDeleteButton(true)}>Delete</button>
+                                    onClick={()=> {setDeleteButton(true); setItemKey(props.id)}}>Delete</button>
                             </NavDropdown.Item>
                         </NavDropdown>
                     </div>
@@ -34,8 +36,9 @@ export function MyItemCard(props) {
                     <Card.Subtitle>P{props.price}</Card.Subtitle>
                 </Card.Body>
             </Card>
-            {EditButton && <EditItemPopup editButton={setEditButton} />}
-            {DeleteButton && <DeleteItemPopup deleteButton={setDeleteButton} />}
+
+            {EditButton && <EditItemPopup editButton={setEditButton} itemId={itemKey} theItem={props.items.filter(item => item.item_id===itemKey)[0]}/>} 
+            {DeleteButton && <DeleteItemPopup deleteButton={setDeleteButton} itemId={itemKey}/>}
         </div>
     );
 };
