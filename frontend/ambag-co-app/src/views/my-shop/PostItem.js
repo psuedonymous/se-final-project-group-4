@@ -2,6 +2,7 @@ import PostApi from '../../apis/Post-api';
 import { useState } from 'react';
 import Popup from '../../components/Popup';
 import React from 'react'
+import './PostItem.css';
 
 
 export default function PostItem({popupButton}) {
@@ -12,6 +13,45 @@ export default function PostItem({popupButton}) {
   const[charity, setCharity] = useState(1);
   const[description, setDescription] = useState('');
   const[category, setCategory] = useState();
+  const[today, setToday] = useState(new Date());
+  const[imageInput, setImageInput] = useState('');
+  const[preview, setPreview] = useState('');
+
+  const handleImageInput = (e) => {
+    const file = e.target.files[0];
+    previewFile(file);
+  } 
+
+  const previewFile = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onloadend = () =>{
+      setPreview(reader.result)
+    }
+  }
+
+  const handleImageUpload = (e) => {
+    e.preventDefault();
+    uploadImage(preview);
+  }
+
+  const uploadImage = (base64EncodedImage) => {
+    console.log(base64EncodedImage);
+    new Promise((resolve, reject)=>{
+      const result = fetch('http://localhost:5000/uploadImage',{
+        method: 'POST',
+        body: JSON.stringify({data: base64EncodedImage}),
+        headers: {'Content-Type': 'application/json'}
+      })
+      resolve(result);
+      reject("Failed to upload")
+    })
+    .catch((err) => {
+      console.error(err)
+    })
+  }
+
 
   const handlePost = (e) =>{
     e.preventDefault()
@@ -24,43 +64,62 @@ export default function PostItem({popupButton}) {
         item_desc: description,
         cat_id: category,
         shop_id: 1, //to update when sign in & signup is done
-        don_dot: '2020-12-12', //to update
-        item_date_posted: '2020-12-12' //to update
+        don_dot: today,
+        item_date_posted: today 
       })
-      resolve(response)
-  }).then((response) => console.log(response))
+      resolve(response);
+      reject("Failed to post")
+  })
+  .then((response) => 
+  console.log(response)
+  )
+  .catch((err) => {
+    console.error(err)
+  })
+
+  window.location="/my-shop";
+  }
+
+  const handleSelectCategory = (e) => {
+    setCategory(e);
   }
 
   return (
     <>
     <div>
     <Popup>
-          <button onClick={()=> popupButton(false)}>X</button>
+      <h5 className='header'>
+        Post a New Item
+      </h5>
+          <button onClick={()=> popupButton(false)} className='btn close-btn'>X</button>
 
-          <input type="text" placeholder="Item name" 
-            value = {itemName}
-            onChange={(e)=> setItemName(e.target.value)}>
-          </input>
+          <label>Item</label>
+            <input className="form-control" type="text" placeholder="Item name" 
+              value = {itemName}
+              onChange={(e)=> setItemName(e.target.value)}>
+            </input>
 
-          <input type="text" placeholder="Item price" 
-            value = {itemPrice} 
-            onChange={(e)=> setItemPrice(e.target.value)}>
-          </input>
+          <label>Price</label>
+            <input className="form-control" type="text" placeholder="Item price" 
+              value = {itemPrice} 
+              onChange={(e)=> setItemPrice(e.target.value)}>
+            </input>
 
-          <input type="date" placeholder="Expiry date" 
-            value = {expiry} 
-            onChange={(e)=> setExpiry(e.target.value)}>
-          </input>
+          <label>Expiry</label>
+            <input className="form-control" type="date" placeholder="Expiry date" 
+              value = {expiry} 
+              onChange={(e)=> setExpiry(e.target.value)}>
+            </input>
 
           {/* value not changing on select, to update */}
           <label>Charity</label>
-            <select>
+            <select className="form-control">
               <option value={1} onChange={(e)=> setCharity(e.target.value)}>Share an Opportunity</option>
             </select>
 
           {/* value not changing on select, to update */}
           <label>Category</label>
-            <select value = {category} onChange={(e)=>setCategory(e.target.value)}>
+            <select className="form-control"  >
               <option value='1' >Apparel</option>
               <option value='2' >Gadgets</option>
               <option value='3' >Stationery</option>
@@ -71,12 +130,26 @@ export default function PostItem({popupButton}) {
               <option value='8' >Health</option>
             </select>
 
-          <input type="text" placeholder="description"
-            value = {description} 
-            onChange={(e)=> setDescription(e.target.value)}>
-          </input>
+          <p>{category}</p>
 
-          <button onClick={handlePost} type="submit">Post</button>
+          <label>Description</label>
+            <textarea className="form-control" type="text" placeholder="description"
+              value = {description} 
+              onChange={(e)=> setDescription(e.target.value)}>
+            </textarea>
+
+          <form>
+            <input 
+            className=" mt-2" 
+            type="file" 
+            name="image"
+            onChange={(e) => {handleImageInput(e)}}
+            value={imageInput}></input>
+          </form>
+
+          {preview && (<img src={preview} className='mt-2' alt="chosen" style={{height:'300px', width:'350px'}}/>)}
+
+          <button onClick={(e)=> {handlePost(e); popupButton(false); handleImageUpload(e) }} type="submit" className='save-btn col-3 ms-auto float-end mb-2 mt-2'>Post</button>
     </Popup>
     </div>
     </>
