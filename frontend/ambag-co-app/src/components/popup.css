@@ -31,8 +31,9 @@
 .popup { 
     position: fixed;
     top: 50%;
-    height: 30vh;
+    height: 60vh;
     z-index: 1;
+    overflow-y: auto;
 }
 
 .popup-inner {
@@ -41,5 +42,5 @@
     justify-content: center;
     align-items: center;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), rgba(160, 179, 244, 0.9) !important;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), rgb(160, 180, 244) !important;
 }
