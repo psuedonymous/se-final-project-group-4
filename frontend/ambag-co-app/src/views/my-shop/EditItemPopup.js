@@ -7,6 +7,7 @@ export default function EditItemPopup({ editButton, itemId, theItem }) {
 
   const[itemName, setItemName] = useState(theItem.item_name);
   const[itemPrice, setItemPrice] = useState(theItem.item_price);
+  const[itemCategory, setItemCategory] = useState(theItem.item_cat);
   const[itemDesc, setItemDesc] = useState(theItem.item_desc);
   const[itemExp, setItemExp] = useState(theItem.item_exp_date);
 
@@ -42,18 +43,21 @@ export default function EditItemPopup({ editButton, itemId, theItem }) {
                     </div>
                     <div className="col-8">
                         <div className="row">
-                            <div className="col-12">
+                            <div className="col-6">
                                 <input className="form-control" value={itemName} onChange={(e)=>{setItemName(e.target.value)}} type="text" placeholder="Name"></input>
                             </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-12">
-                                <input className="form-control mt-2" value={itemPrice} onChange={(e)=>{setItemPrice(e.target.value)}} type="text" placeholder="Price"></input>
+                            <div className="col-6">
+                                <input className="form-control" value={itemPrice} onChange={(e)=>{setItemPrice(e.target.value)}} type="text" placeholder="Price"></input>
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-12">
-                                <input className="form-control mt-2" value={itemExp} onChange={(e)=>{setItemExp(e.target.value)}} type="Date" placeholder="Expiry"></input>
+                        <div className="col-6">
+                            <select className="form-control mt-2" name="category">
+                                <option value="select-charity">Share an Opportunity</option>
+                            </select>
+                            </div>
+                            <div className="col-6">
+                            <input className="form-control mt-2" value={itemExp} onChange={(e)=>{setItemExp(e.target.value)}} type="Date" placeholder="Expiry"></input>
                             </div>
                         </div>
                         <select className="form-control mt-2" name="charity">
