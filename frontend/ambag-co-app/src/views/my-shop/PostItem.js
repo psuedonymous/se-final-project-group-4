@@ -1,5 +1,5 @@
 import PostApi from '../../apis/Post-api';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Popup from '../../components/Popup';
 import React from 'react'
 import './PostItem.css';
@@ -16,6 +16,7 @@ export default function PostItem({popupButton}) {
   const[today, setToday] = useState(new Date());
   const[imageInput, setImageInput] = useState('');
   const[preview, setPreview] = useState('');
+  const[categories, setCategories] = useState([]);
 
   const handleImageInput = (e) => {
     const file = e.target.files[0];
@@ -65,6 +66,7 @@ export default function PostItem({popupButton}) {
         cat_id: category,
         shop_id: 1, //to update when sign in & signup is done
         don_dot: today,
+        don_stat: "pending",
         item_date_posted: today 
       })
       resolve(response);
@@ -80,9 +82,23 @@ export default function PostItem({popupButton}) {
   window.location="/my-shop";
   }
 
-  const handleSelectCategory = (e) => {
-    setCategory(e);
+  const getCategories = () => {
+    new Promise((resolve, reject) => {
+        const res = fetch("http://localhost:5000/getCategories");
+        resolve(res)
+    }).then((res) => {
+        new Promise((resolve, reject) => {
+            const data = res.json();
+            resolve(data);
+        }).then((data) => {
+            setCategories(data);
+        })
+    })
   }
+
+  useEffect(() => {
+    getCategories();
+  })
 
   return (
     <>
@@ -119,19 +135,11 @@ export default function PostItem({popupButton}) {
 
           {/* value not changing on select, to update */}
           <label>Category</label>
-            <select className="form-control"  >
-              <option value='1' >Apparel</option>
-              <option value='2' >Gadgets</option>
-              <option value='3' >Stationery</option>
-              <option value='4' >Appliances</option>
-              <option value='5' >Groceries</option>
-              <option value='6' >Toys</option>
-              <option value='7' >Accessories</option>
-              <option value='8' >Health</option>
+            <select className="form-control" value={category} onChange={(e) => setCategory(e.target.value)}>
+              {categories.map((category) => {
+                return <option value={category.cat_id}>{category.cat_name}</option>
+              })}
             </select>
-
-          <p>{category}</p>
-
           <label>Description</label>
             <textarea className="form-control" type="text" placeholder="description"
               value = {description} 

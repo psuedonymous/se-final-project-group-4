@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 //endpoint for getting all items 
 app.get('/getItems', (req, res) => {
     new Promise((resolve, reject) => {
-      const result = db.query("SELECT * FROM items");
+      const result = db.query("SELECT * FROM items ORDER BY item_id ASC");
       resolve(result);
       reject("Failed to get all items");
     })
@@ -71,15 +71,15 @@ app.post('/uploadImage', (req,res)=>{
 app.post('/postItem', (req,res) => {
   new Promise((resolve, reject) => {
     const result = db.query
-    ("INSERT INTO donations(char_id, don_amount, don_dot) VALUES($1, $2, $3) RETURNING *",
-    [req.body.item_charity, req.body.item_price, req.body.don_dot]);
+    ("INSERT INTO donations(char_id, don_amount, don_dot, don_status) VALUES($1, $2, $3, $4) RETURNING *",
+    [req.body.item_charity, req.body.item_price, req.body.don_dot, req.body.don_stat]);
     resolve(result);
     reject("Failed to post an item")
   })
   .then((result) => {
     const result2 = db.query
     ("INSERT INTO items(cat_id, shop_id, don_id, item_name, item_price, item_desc, item_exp_date, item_date_posted) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
-    [req.body.item_charity, req.body.shop_id, result.rows[0].don_id , req.body.item_name,req.body.item_price,req.body.item_desc,
+    [req.body.cat_id, req.body.shop_id, result.rows[0].don_id , req.body.item_name,req.body.item_price,req.body.item_desc,
     req.body.item_exp_date, req.body.item_date_posted]);
   })
   .catch((err)=>{
@@ -116,8 +116,8 @@ app.delete("/getItems/:id", (req,res)=>{
 app.put("/getItems/edit/:id", (req, res)=>{
   new Promise((resolve, reject)=>{
     const {id} = req.params;
-    const editItem = db.query("UPDATE items SET item_name = $1, item_price = $2, item_desc =$3, item_exp_date= $4 WHERE item_id = $5",
-    [req.body.itemName, req.body.itemPrice, req.body.itemDesc, req.body.itemExp , id])
+    const editItem = db.query("UPDATE items SET item_name = $1, item_price = $2, item_desc =$3, item_exp_date= $4, cat_id= $5 WHERE item_id = $6",
+    [req.body.itemName, req.body.itemPrice, req.body.itemDesc, req.body.itemExp , req.body.itemCategory, id])
     resolve(editItem);
     reject("Failed to edit an item");
   })
@@ -135,7 +135,7 @@ app.put("/getItems/edit/:id", (req, res)=>{
 // endpoint for getting all categories
 app.get('/getCategories', (req, res) => {
   new Promise((resolve, reject) => {
-    const result = db.query('SELECT * FROM categories')
+    const result = db.query('SELECT * FROM categories ORDER BY cat_id ASC')
     resolve(result);
     reject("Failed to get categories");
   }).then((result) => {

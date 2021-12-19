@@ -8,13 +8,14 @@ export default function EditItemPopup({ editButton, itemId, theItem }) {
     const [itemPrice, setItemPrice] = useState(theItem.item_price);
     const [itemDesc, setItemDesc] = useState(theItem.item_desc);
     const [itemExp, setItemExp] = useState(theItem.item_exp_date);
+    const [itemCategory, setItemCategory] = useState(theItem.cat_id);
     const [categories, setCategories] = useState([]);
 
     const editItem = e => {
         e.preventDefault();
 
         new Promise((resolve, reject) => {
-            const body = { itemName, itemPrice, itemDesc, itemExp }
+            const body = { itemName, itemPrice, itemDesc, itemExp,  itemCategory}
             const response = fetch(`http://localhost:5000/getItems/edit/${itemId}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
@@ -69,7 +70,7 @@ export default function EditItemPopup({ editButton, itemId, theItem }) {
                         </div>
                         <div className="row">
                             <div className="col-6">
-                                <select className="form-control mt-2" name="category">
+                                <select className="form-control mt-2" name="category" value={itemCategory} onChange={(e) => setItemCategory(e.target.value)}>
                                     {categories.map((category) => {
                                        return <option value={category.cat_id}>{category.cat_name}</option>
                                     })}
