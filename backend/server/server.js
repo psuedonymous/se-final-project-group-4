@@ -113,7 +113,7 @@ app.delete("/getItems/:id", (req,res)=>{
 
 
 //endpoint for editing an item
-app.put("/getItems/:id", (req, res)=>{
+app.put("/getItems/edit/:id", (req, res)=>{
   new Promise((resolve, reject)=>{
     const {id} = req.params;
     const editItem = db.query("UPDATE items SET item_name = $1, item_price = $2, item_desc =$3, item_exp_date= $4 WHERE item_id = $5",
@@ -130,6 +130,19 @@ app.put("/getItems/:id", (req, res)=>{
 
 
   res.json("Item was edited!")
+})
+
+// endpoint for getting all categories
+app.get('/getCategories', (req, res) => {
+  new Promise((resolve, reject) => {
+    const result = db.query('SELECT * FROM categories')
+    resolve(result);
+    reject("Failed to get categories");
+  }).then((result) => {
+    res.status(200).json(result.rows)
+  }).catch((err) => {
+    console.log(err)
+  })
 })
 
 app.listen(port, ()=> {
