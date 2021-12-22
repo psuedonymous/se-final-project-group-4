@@ -1,3 +1,4 @@
+import { getCategories, getCharities } from '../../apis/Get-apis';
 import Popup from "../../components/Popup";
 import "./EditItemPopup.css";
 import { useState, useEffect } from 'react';
@@ -9,13 +10,15 @@ export default function EditItemPopup({ editButton, itemId, theItem }) {
     const [itemDesc, setItemDesc] = useState(theItem.item_desc);
     const [itemExp, setItemExp] = useState(theItem.item_exp_date);
     const [itemCategory, setItemCategory] = useState(theItem.cat_id);
+    const [charity, setCharity] = useState(theItem.char_id);
     const [categories, setCategories] = useState([]);
+    const [charities, setCharities] = useState([]);
 
     const editItem = e => {
         e.preventDefault();
 
         new Promise((resolve, reject) => {
-            const body = { itemName, itemPrice, itemDesc, itemExp,  itemCategory}
+            const body = { itemName, itemPrice, itemDesc, itemExp,  itemCategory, charity}
             const response = fetch(`http://localhost:5000/getItems/edit/${itemId}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
@@ -30,22 +33,9 @@ export default function EditItemPopup({ editButton, itemId, theItem }) {
             })
     }
 
-    const getCategories = () => {
-        new Promise((resolve, reject) => {
-            const res = fetch("http://localhost:5000/getCategories");
-            resolve(res)
-        }).then((res) => {
-            new Promise((resolve, reject) => {
-                const data = res.json();
-                resolve(data);
-            }).then((data) => {
-                setCategories(data);
-            })
-        })
-    }
-
     useEffect(() => {
-        getCategories();
+        getCategories(setCategories);
+        getCharities(setCharities);
     },[])
 
     return (
@@ -80,8 +70,10 @@ export default function EditItemPopup({ editButton, itemId, theItem }) {
                                 <input className="form-control mt-2" value={itemExp} onChange={(e) => { setItemExp(e.target.value) }} type="Date" placeholder="Expiry"></input>
                             </div>
                         </div>
-                        <select className="form-control mt-2" name="charity">
-                            <option value="select-charity">Share an Opportunity</option>
+                        <select className="form-control mt-2" name="charity" value={charity} onChange={(e) => setCharity(e.target.value)}>
+                            {charities.map((charity) => {
+                                return <option value={charity.char_id}>{charity.char_name}</option>
+                            })}    
                         </select>
                         <textarea className="form-control mt-2" value={itemDesc} onChange={(e) => { setItemDesc(e.target.value) }} placeholder="Description" maxLength={150}></textarea>
                     </div>
