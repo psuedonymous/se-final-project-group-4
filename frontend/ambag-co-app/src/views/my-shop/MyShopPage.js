@@ -4,31 +4,16 @@ import { MyItemCard } from "./MyItemCard";
 import PostItem from "./PostItem";
 import './MyShopPage.css';
 import { Route, Routes } from 'react-router-dom';
-import { StatusIndicator, ProgressStatus } from '../../assets/Status';
+import { DonationStatusIndicator, DonationProgressStatus } from '../../assets/ItemStatus';
+import { displayItems } from '../../apis/Get-apis';
 
 export default function MyShopPage() {
 
   const [PostButton, setPostButton] = useState(false);
   const [items, setItems] = useState([]);
 
-  const displayItems = () => {
-    new Promise((resolve, reject) => {
-      const response = fetch("http://localhost:5000/getItems"); //to add proxy
-      resolve(response)
-    })
-      .then((response) => {
-        new Promise((resolve, reject) => {
-          const jsonData = response.json();
-          resolve(jsonData);
-        })
-          .then((jsonData) => {
-            setItems(jsonData);
-          })
-      })
-  }
-
   useEffect(() => {
-    displayItems();
+    displayItems(setItems);
   }, [])
 
   return (
@@ -57,10 +42,10 @@ export default function MyShopPage() {
       <div className="row m-3">
         <div className="title"> My Donations </div>
         <div className='my-donation'>
-          <div className='status-container'>
-            <StatusIndicator />
+          <div className='status-container mt-4'>
+            <DonationStatusIndicator />
             <div className='status mt-4'>
-              {ProgressStatus.map((status) => {
+              {DonationProgressStatus.map((status) => {
                 return <Routes>
                   <Route path={status.url}></Route>
                 </Routes>
