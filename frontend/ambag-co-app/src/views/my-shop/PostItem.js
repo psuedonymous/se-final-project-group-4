@@ -13,7 +13,7 @@ export default function PostItem({ popupButton }) {
   const [expiry, setExpiry] = useState();
   const [charity, setCharity] = useState(1);
   const [description, setDescription] = useState('');
-  const [category, setCategory] = useState();
+  const [category, setCategory] = useState(1);
   const [today, setToday] = useState(new Date());
   const [imageInput, setImageInput] = useState('');
   const [preview, setPreview] = useState('');
