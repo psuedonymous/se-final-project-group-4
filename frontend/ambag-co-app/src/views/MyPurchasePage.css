@@ -1,0 +1,58 @@
+@media screen and (min-width: 260px) {
+    .statusIndicator a {
+        font-size: 0.5rem;
+        height: 43px;
+    }
+    .statusIndicator hr {
+        width: 10%;
+    }
+}
+
+@media screen and (min-width: 576px) {
+    .statusIndicator a {
+        font-size: 0.7rem;
+        height: 40px;
+    }
+    .statusIndicator hr {
+        width: 14%;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .statusIndicator a {
+        font-size: 0.9rem;
+        height: 50px;
+    }
+    .statusIndicator hr {
+        width: 17%;
+    }
+}
+
+.my-purchase .status-container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 30px 0;
+  }
+  
+  .my-purchase .status-container {
+    width: 100%;
+    min-height: 500px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0px 3px 5px rgb(155, 177, 236, 0.6);
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .statusIndicator {
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+   
+  .statusIndicator hr {
+    background: gray;
+    height: 2px;
+    margin: 5px;
+  }
