@@ -1,33 +1,42 @@
+import { getCategories, getCharities } from '../../apis/Get-apis';
 import Popup from "../../components/Popup";
 import "./EditItemPopup.css";
-import {useState} from 'react';
+import { useState, useEffect } from 'react';
 
 export default function EditItemPopup({ editButton, itemId, theItem }) {
 
+    const [itemName, setItemName] = useState(theItem.item_name);
+    const [itemPrice, setItemPrice] = useState(theItem.item_price);
+    const [itemDesc, setItemDesc] = useState(theItem.item_desc);
+    const [itemExp, setItemExp] = useState(theItem.item_exp_date);
+    const [itemCategory, setItemCategory] = useState(theItem.cat_id);
+    const [charity, setCharity] = useState(theItem.char_id);
+    const [categories, setCategories] = useState([]);
+    const [charities, setCharities] = useState([]);
 
-  const[itemName, setItemName] = useState(theItem.item_name);
-  const[itemPrice, setItemPrice] = useState(theItem.item_price);
-  const[itemDesc, setItemDesc] = useState(theItem.item_desc);
-  const[itemExp, setItemExp] = useState(theItem.item_exp_date);
+    const editItem = e => {
+        e.preventDefault();
 
-  const editItem = e =>{
-    e.preventDefault();
+        new Promise((resolve, reject) => {
+            const body = { itemName, itemPrice, itemDesc, itemExp,  itemCategory, charity}
+            const response = fetch(`http://localhost:5000/getItems/edit/${itemId}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body)
+            })
+            resolve(response);
+            reject("Failed to edit");
+            window.location = "/my-shop";
+        })
+            .catch((err) => {
+                console.error(err)
+            })
+    }
 
-    new Promise((resolve,reject)=>{
-      const body = {itemName, itemPrice, itemDesc, itemExp}
-      const response = fetch(`http://localhost:5000/getItems/${itemId}`,{
-        method: "PUT",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(body)
-      })
-      resolve(response);
-      reject("Failed to edit");
-      window.location ="/my-shop";
-    })
-    .catch((err) => {
-      console.error(err)
-    })
-  }
+    useEffect(() => {
+        getCategories(setCategories);
+        getCharities(setCharities);
+    },[])
 
     return (
         <div>
@@ -42,28 +51,35 @@ export default function EditItemPopup({ editButton, itemId, theItem }) {
                     </div>
                     <div className="col-8">
                         <div className="row">
-                            <div className="col-12">
-                                <input className="form-control" value={itemName} onChange={(e)=>{setItemName(e.target.value)}} type="text" placeholder="Name"></input>
+                            <div className="col-6">
+                                <input className="form-control" value={itemName} onChange={(e) => { setItemName(e.target.value) }} type="text" placeholder="Name"></input>
+                            </div>
+                            <div className="col-6">
+                                <input className="form-control" value={itemPrice} onChange={(e) => { setItemPrice(e.target.value) }} type="text" placeholder="Price"></input>
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-12">
-                                <input className="form-control mt-2" value={itemPrice} onChange={(e)=>{setItemPrice(e.target.value)}} type="text" placeholder="Price"></input>
+                            <div className="col-6">
+                                <select className="form-control mt-2" name="category" value={itemCategory} onChange={(e) => setItemCategory(e.target.value)}>
+                                    {categories.map((category) => {
+                                       return <option value={category.cat_id}>{category.cat_name}</option>
+                                    })}
+                                </select>
+                            </div>
+                            <div className="col-6">
+                                <input className="form-control mt-2" value={itemExp} onChange={(e) => { setItemExp(e.target.value) }} type="Date" placeholder="Expiry"></input>
                             </div>
                         </div>
-                        <div className="row">
-                            <div className="col-12">
-                                <input className="form-control mt-2" value={itemExp} onChange={(e)=>{setItemExp(e.target.value)}} type="Date" placeholder="Expiry"></input>
-                            </div>
-                        </div>
-                        <select className="form-control mt-2" name="charity">
-                            <option value="select-charity">Share an Opportunity</option>
+                        <select className="form-control mt-2" name="charity" value={charity} onChange={(e) => setCharity(e.target.value)}>
+                            {charities.map((charity) => {
+                                return <option value={charity.char_id}>{charity.char_name}</option>
+                            })}    
                         </select>
-                        <textarea className="form-control mt-2" value={itemDesc} onChange={(e)=>{setItemDesc(e.target.value)}} placeholder="Description" maxLength={150}></textarea>
+                        <textarea className="form-control mt-2" value={itemDesc} onChange={(e) => { setItemDesc(e.target.value) }} placeholder="Description" maxLength={150}></textarea>
                     </div>
                 </div>
                 <div className="row mt-2 m-1">
-                    <button className="save-btn col-3 ms-auto" onClick={(e) => {editItem(e); editButton(false)}}>Save</button>
+                    <button className="save-btn col-3 ms-auto" onClick={(e) => { editItem(e); editButton(false) }}>Save</button>
                 </div>
             </Popup>
         </div>
