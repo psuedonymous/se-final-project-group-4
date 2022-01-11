@@ -36,8 +36,16 @@ app.get('/getItems', (req, res) => {
 
 //endpoint for deleting an item
 app.delete("/getItems/:id", (req, res) => {
+  const { id } = req.params;
   new Promise((resolve, reject) => {
-    const { id } = req.params;
+    new Promise((resolve, reject) => {
+      const cld_id = db.query("SELECT item_cloudinary_id FROM items WHERE item_id = $1", [id]);
+      resolve(cld_id)
+    }).then((cld_id) => {
+      cloudinary.uploader.destroy(cld_id.rows[0].item_cloudinary_id);
+      // console.log(cld_id.rows[0].item_cloudinary_id);
+    })
+
     const deleteItem = db.query("DELETE FROM items WHERE item_id = $1",
       [id]);
     resolve(deleteItem);
@@ -115,9 +123,9 @@ app.post("/post-item", (req, response) => {
  })
   .then((image) => {
     new Promise((resolve, reject) => {
-      const result = db.query("INSERT INTO items(cat_id, shop_id, item_name, item_price, item_desc, item_exp_date, item_date_posted, char_id, item_image) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *",
+      const result = db.query("INSERT INTO items(cat_id, shop_id, item_name, item_price, item_desc, item_exp_date, item_date_posted, char_id, item_image, item_cloudinary_id) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *",
       [req.body.item_charity, req.body.shop_id , req.body.item_name ,req.body.item_price , req.body.item_desc,
-      req.body.item_exp_date , req.body.item_date_posted , req.body.char, image.secure_url]);
+      req.body.item_exp_date , req.body.item_date_posted , req.body.char, image.secure_url, image.public_id]);
       resolve(result)   
     }).then((result)=>console.log(result.rows[0]))
   }).then(
