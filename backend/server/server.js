@@ -66,14 +66,26 @@ app.delete("/getItems/:id", (req, res) => {
 app.put("/getItems/edit/:id", (req, res) => {
   const { id } = req.params;
   new Promise((resolve, reject) => {
-    const editItem = db.query("UPDATE items SET item_name = $1, item_price = $2, item_desc =$3, item_exp_date= $4, cat_id= $5, char_id=$6 WHERE item_id = $7",
-      [req.body.itemName, req.body.itemPrice, req.body.itemDesc, req.body.itemExp, req.body.itemCategory, req.body.charity, id])
+    new Promise((resolve, reject) => {
+      const cld_id = db.query("SELECT item_cloudinary_id FROM items WHERE item_id = $1", [id]);
+      resolve(cld_id);
+    }).then((cld_id)=> {
+      cloudinary.uploader.destroy(cld_id.rows[0].item_cloudinary_id);
+    }).then(()=>{
+      cloudinary.uploader.upload(req.body.preview,{
+        upload_preset: 'ambag_co'
+     }).then((image) => {
+      const editItem = db.query("UPDATE items SET item_name = $1, item_price = $2, item_desc =$3, item_exp_date= $4, cat_id= $5, char_id=$6, item_cloudinary_id = $7, item_image=$8 WHERE item_id = $9",
+      [req.body.itemName, req.body.itemPrice, req.body.itemDesc, req.body.itemExp, req.body.itemCategory, req.body.charity, image.public_id, image.secure_url, id]);
     
     if (res.status(200)) {
       resolve(editItem);
     } else {
       reject(`Failed to update item #${id}`);
     }
+     })
+    })
+    
   })
     .then((editItem) => {
       console.log(`Succesfully updated item #${id}`)
