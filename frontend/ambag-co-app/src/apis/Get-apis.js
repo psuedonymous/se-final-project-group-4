@@ -41,3 +41,19 @@ export const getCharities = (setCharities) => {
     })
   })
 }
+
+export const displayAllItems = (setItems) => {
+  new Promise((resolve, reject) => {
+    const response = fetch("http://localhost:5000/getAllItems"); //to add proxy
+    resolve(response)
+  })
+    .then((response) => {
+      new Promise((resolve, reject) => {
+        const jsonData = response.json();
+        resolve(jsonData);
+      })
+        .then((jsonData) => {
+          setItems(jsonData);
+        })
+    })
+}

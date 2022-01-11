@@ -17,10 +17,26 @@ app.get('/', (req, res) => {
   res.send('Hello, World!');
 })
 
-//endpoint for getting all items 
+
+//getting all items (NOTE: To update shop_id when login/signup is fixed, exception of items to display)
+app.get('/getAllItems', (req,res) => {
+  new Promise((resolve, reject) => {
+    const result = db.query("SELECT * FROM items  ORDER BY item_id ASC");
+    resolve(result);
+    reject("Failed to get all items");
+  })
+    .then((result) => {
+      res.status(200).json(result.rows)
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+})
+
+//endpoint for getting items by a certain shop (NOTE: To update shop_id when login/signup is fixed)
 app.get('/getItems', (req, res) => {
   new Promise((resolve, reject) => {
-    const result = db.query("SELECT * FROM items ORDER BY item_id ASC");
+    const result = db.query("SELECT * FROM items WHERE shop_id = $1 ORDER BY item_id ASC", [1]);
     resolve(result);
     reject("Failed to get all items");
   })
