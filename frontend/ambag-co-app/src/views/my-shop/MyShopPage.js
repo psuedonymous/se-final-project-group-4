@@ -28,7 +28,7 @@ export default function MyShopPage() {
           {items.map((item) => {
             return (<MyItemCard
               items={items}
-              img={item.item_desc}
+              img={item.item_image}
               name={item.item_name}
               price={item.item_price}
               key={item.item_id}

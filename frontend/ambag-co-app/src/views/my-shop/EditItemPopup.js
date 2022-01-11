@@ -11,14 +11,20 @@ export default function EditItemPopup({ editButton, itemId, theItem }) {
     const [itemExp, setItemExp] = useState(theItem.item_exp_date);
     const [itemCategory, setItemCategory] = useState(theItem.cat_id);
     const [charity, setCharity] = useState(theItem.char_id);
+    const [image, setImage] = useState(theItem.item_image);
     const [categories, setCategories] = useState([]);
     const [charities, setCharities] = useState([]);
+    const [preview, setPreview] = useState('');
+    const [imageInput, setImageInput] = useState('');
+
+
+
 
     const editItem = e => {
         e.preventDefault();
 
         new Promise((resolve, reject) => {
-            const body = { itemName, itemPrice, itemDesc, itemExp,  itemCategory, charity}
+            const body = { itemName, itemPrice, itemDesc, itemExp,  itemCategory, charity, preview}
             const response = fetch(`http://localhost:5000/getItems/edit/${itemId}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
@@ -26,7 +32,7 @@ export default function EditItemPopup({ editButton, itemId, theItem }) {
             })
             resolve(response);
             reject("Failed to edit");
-            window.location = "/my-shop";
+           
         })
             .catch((err) => {
                 console.error(err)
@@ -38,6 +44,20 @@ export default function EditItemPopup({ editButton, itemId, theItem }) {
         getCharities(setCharities);
     },[])
 
+    const handleImageInput = (e) => {
+      const file = e.target.files[0];
+      previewFile(file);
+    }
+  
+    const previewFile = (file) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+  
+      reader.onloadend = () => {
+        setPreview(reader.result)
+      }
+    }
+
     return (
         <div>
             <Popup >
@@ -45,8 +65,9 @@ export default function EditItemPopup({ editButton, itemId, theItem }) {
                 <div className="row">
                     <div className="col-4">
                         <div className="row">
-                            <img src="https://www.qoobee.com/wp-content/uploads/QooBee-Stuffed-Toy-2019.jpg" width={150} height={150}></img>
-                            <input className="mt-2" type="file"></input>
+                            <img src={image} width={150} height={150}></img>
+                            <input className="mt-2" type="file" name="image"
+                            onChange={(e) => { handleImageInput(e) }} value={imageInput}></input>
                         </div>
                     </div>
                     <div className="col-8">
@@ -81,6 +102,7 @@ export default function EditItemPopup({ editButton, itemId, theItem }) {
                 <div className="row mt-2 m-1">
                     <button className="save-btn col-3 ms-auto" onClick={(e) => { editItem(e); editButton(false) }}>Save</button>
                 </div>
+                {preview && (<img src={preview} className='mt-2' alt="chosen" style={{ height: '150px', width: '150px' }} />)}
             </Popup>
         </div>
     )

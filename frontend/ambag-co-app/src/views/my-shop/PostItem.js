@@ -34,52 +34,43 @@ export default function PostItem({ popupButton }) {
     }
   }
 
-  const handleImageUpload = (e) => {
+  const handleNewPost = (e) => {
     e.preventDefault();
-    uploadImage(preview);
+    postItem(preview);
   }
 
-  const uploadImage = (base64EncodedImage) => {
-    console.log(base64EncodedImage);
-    new Promise((resolve, reject) => {
-      const result = fetch('http://localhost:5000/uploadImage', {
+  const postItem = (base64EncodedImage) => {
+  
+    new Promise((resolve, reject)=>{
+      const result = fetch('http://localhost:5000/post-item',{
         method: 'POST',
-        body: JSON.stringify({ data: base64EncodedImage }),
-        headers: { 'Content-Type': 'application/json' }
+        body: JSON.stringify({image: base64EncodedImage,
+          item_name: itemName,
+          item_price: itemPrice,
+          item_exp_date: expiry,
+          item_charity: charity,
+          item_desc: description,
+          cat_id: 1,
+          shop_id: 1, //to update when sign in & signup is done
+          don_dot: today,
+          item_date_posted: today,
+          char: 1
+        }),
+        headers: {'Content-Type': 'application/json'}
       })
       resolve(result);
       reject("Failed to upload")
+    }).then((result) => {
+    new Promise((resolve, reject)=>{
+      const  theR  = result.json();
+      resolve(theR)
+      }) 
     })
-      .catch((err) => {
-        console.error(err)
-      })
-  }
-
-  const handlePost = (e) => {
-    e.preventDefault()
-    new Promise((resolve, reject) => {
-      const response = PostApi.post('/postItem', {
-        item_name: itemName,
-        item_price: itemPrice,
-        item_exp_date: expiry,
-        item_desc: description,
-        cat_id: category,
-        shop_id: 1, //to update when sign in & signup is done
-        char_id: charity,
-        item_date_posted: today
-      })
-      resolve(response);
-      reject("Failed to post")
+    .catch((err) => {
+      console.error(err)
     })
-      .then((response) =>
-        console.log(response)
-      )
-      .catch((err) => {
-        console.error(err)
-      })
-
-    window.location = "/my-shop";
-  }
+    
+    }
 
   useEffect(() => {
     getCategories(setCategories);
@@ -144,7 +135,7 @@ export default function PostItem({ popupButton }) {
 
           {preview && (<img src={preview} className='mt-2' alt="chosen" style={{ height: '300px', width: '350px' }} />)}
 
-          <button onClick={(e) => { handlePost(e); popupButton(false); handleImageUpload(e) }} type="submit" className='save-btn col-3 ms-auto float-end mb-2 mt-2'>Post</button>
+          <button onClick={(e) => {popupButton(false); handleNewPost(e) }} type="submit" className='save-btn col-3 ms-auto float-end mb-2 mt-2'>Post</button>
         </Popup>
       </div>
     </>
