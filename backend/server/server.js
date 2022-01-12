@@ -33,7 +33,7 @@ app.get('/getAllItems', (req,res) => {
     })
 })
 
-//endpoint for getting items by a certain shop (NOTE: To update shop_id when login/signup is fixed)
+//endpoint for getting items by a certain shop/seller (NOTE: To update shop_id when login/signup is fixed)
 app.get('/getItems', (req, res) => {
   new Promise((resolve, reject) => {
     const result = db.query("SELECT * FROM items WHERE shop_id = $1 ORDER BY item_id ASC", [1]);
