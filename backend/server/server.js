@@ -172,6 +172,37 @@ app.post("/post-item", (req, response) => {
   });
 });
 
+//endpoint for adding to bag
+app.post("/add-to-bag", (req, response) => {
+  new Promise((resolve,reject) => {
+    const result = db.query('SELECT add_to_bag($1, $2)',
+     [req.body.account_no, req.body.item]);
+     resolve(result);
+  }).then(
+    response.status(201).send({
+      status: "success",
+      data: {
+        message: "Added to bag",
+      },
+    })
+  )
+})
+
+
+// endpoint for items in shopbag (NOTE: To replace $1 with account_id when login/signup is done)
+app.get('/get-shopbag-items', (req, res) => {
+  new Promise((resolve, reject) => {
+    const result = db.query('SELECT DISTINCT * FROM get_shopbag_items($1)', [1])
+    resolve(result);
+    reject("Failed to get shopbag items");
+  }).then((result) => {
+    res.status(200).json(result.rows)
+  }).catch((err) => {
+    console.log(err)
+  })
+})
+
+
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

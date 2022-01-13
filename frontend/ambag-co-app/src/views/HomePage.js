@@ -23,7 +23,8 @@ export default function Home() {
               </div>
               <div className="row justify-content-right">
                   {items.map((item) => {
-                      return (<ItemCard 
+                      return (<ItemCard
+                        id = {item.item_id} 
                         img={item.item_image} 
                         title={item.item_name} 
                         desc={item.item_desc} 
