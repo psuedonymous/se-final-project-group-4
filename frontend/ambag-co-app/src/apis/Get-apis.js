@@ -57,3 +57,20 @@ export const displayAllItems = (setItems) => {
         })
     })
 }
+
+
+export const displayShopBagItems = (setItems) => {
+  new Promise((resolve, reject) => {
+    const response = fetch("http://localhost:5000/get-shopbag-items"); //to add proxy
+    resolve(response)
+  })
+    .then((response) => {
+      new Promise((resolve, reject) => {
+        const jsonData = response.json();
+        resolve(jsonData);
+      })
+        .then((jsonData) => {
+          setItems(jsonData);
+        })
+    })
+}
