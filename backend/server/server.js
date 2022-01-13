@@ -172,6 +172,22 @@ app.post("/post-item", (req, response) => {
   });
 });
 
+//endpoint for adding to bag
+app.post("/add-to-bag", (req, response) => {
+  new Promise((resolve,reject) => {
+    const result = db.query('SELECT add_to_bag($1, $2)',
+     [req.body.account_no, req.body.item]);
+     resolve(result);
+  }).then(
+    response.status(201).send({
+      status: "success",
+      data: {
+        message: "Added to bag",
+      },
+    })
+  )
+})
+
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
