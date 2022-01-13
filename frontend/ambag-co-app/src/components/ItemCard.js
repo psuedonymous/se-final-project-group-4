@@ -40,6 +40,8 @@ export default function ItemCard(props) {
                     <h5 class="card-title">{props.price}</h5>
                     <p class="card-text">{props.desc}</p>
                     <button class="btn btn-primary" disabled={disable}
+
+                    //Need to remove reserved items on Home
                     onClick= {(e)=> {mineItem(e); setDisable(true)}} >Mine ❤️🦄</button>
                 </div>
             </div>

@@ -1,0 +1,15 @@
+.lm-button {
+  border-radius: 5px;
+  padding: 5px;
+  background-color: #9EB4F7;
+  border: none;
+  font-size: calc(11px + 3 * ((100vw - 320px) / 680));
+}
+
+.lm-button:hover {
+    font-weight: 900;
+    color: white!important;
+    background-color: rgba(65, 102, 234, 0.808);
+    border-radius: 10px;
+    transition: all 0.3s ease-out;
+}
