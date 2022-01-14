@@ -15,6 +15,7 @@ export default function CheckoutPage() {
                         <div className='shipping-method mt-4'>
                             <Routes>
                                 <Route path='/checkout/deliver'/>
+                                <Route path='/checkout/pick-up'/>
                             </Routes>
                             <Outlet />
                         </div>
