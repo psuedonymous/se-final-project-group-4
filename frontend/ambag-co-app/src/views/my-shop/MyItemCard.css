@@ -11,3 +11,8 @@
     height: 12vw;
     object-fit: cover;
 }
+
+.edit-btn, .delete-btn   {
+    display: block;
+    width: 100%;
+}
