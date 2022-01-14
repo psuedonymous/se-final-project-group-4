@@ -1,4 +1,5 @@
 import { ShippingMethodIndicator } from "../../assets/ShippingMethod";
+import { Outlet, Route, Routes, } from 'react-router-dom';
 import { NavBar } from "../../components/NavBar";
 import './CheckoutPage.css';
 
@@ -12,6 +13,10 @@ export default function CheckoutPage() {
                     <div className='shipping-method-container'>
                         <ShippingMethodIndicator />
                         <div className='shipping-method mt-4'>
+                            <Routes>
+                                <Route path='/checkout/deliver'/>
+                            </Routes>
+                            <Outlet />
                         </div>
                     </div>
                 </div>
