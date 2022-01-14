@@ -75,7 +75,7 @@ export default function PostItem({ popupButton }) {
   useEffect(() => {
     getCategories(setCategories);
     getCharities(setCharities);
-  })
+  },[])
 
   return (
     <>
