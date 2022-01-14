@@ -10,7 +10,6 @@ export default function DeleteItemPopup({deleteButton, itemId}) {
       })
       resolve(deleteTodo);
       reject("Failed to delete");
-      window.location="/my-shop";
     })
     .catch((err) => {
       console.error(err)
