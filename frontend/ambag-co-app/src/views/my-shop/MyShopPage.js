@@ -14,7 +14,7 @@ export default function MyShopPage() {
 
   useEffect(() => {
     displayItems(setItems);
-  }, [])
+  })
 
   return (
     <>

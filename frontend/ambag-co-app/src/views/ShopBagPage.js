@@ -8,7 +8,7 @@ export default function ShopBagPage(props) {
 
   useEffect(() => {
     displayShopBagItems(setItems);
-  }, [])
+  })
 
 
     return (
@@ -21,6 +21,7 @@ export default function ShopBagPage(props) {
               <div className="row justify-content-right">
                   {items.map((item) => {
                       return (<ShopBagItemCard
+                        id = {item.i_id}
                         img={item.i_image} 
                         title={item.i_name} 
                         desc={item.i_desc} 
