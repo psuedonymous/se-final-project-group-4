@@ -8,7 +8,7 @@ export default function ShopBagPage(props) {
 
   useEffect(() => {
     displayShopBagItems(setItems);
-  }, [])
+  })
 
 
     return (
