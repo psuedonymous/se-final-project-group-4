@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
 //getting all items (NOTE: To update shop_id when login/signup is fixed, exception of items to display)
 app.get('/getAllItems', (req,res) => {
   new Promise((resolve, reject) => {
-    const result = db.query("SELECT * FROM items  ORDER BY item_id ASC");
+    const result = db.query("SELECT * FROM items WHERE item_id NOT IN (SELECT UNNEST(items_list) FROM shopbags) ORDER BY item_id ASC");
     resolve(result);
     reject("Failed to get all items");
   })
@@ -201,6 +201,7 @@ app.get('/get-shopbag-items', (req, res) => {
     console.log(err)
   })
 })
+
 
 app.delete('/remove-shopbag-item/:id', (req, res) => {
   const { id } = req.params;
