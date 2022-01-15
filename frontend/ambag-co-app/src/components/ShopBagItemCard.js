@@ -18,21 +18,31 @@ export default function ShopBagItemCard(props) {
   }
 
     return (
-        <div className="col-3">
-            <div class="card p-0 overflow-hidden h-60 shadow">
-                <div class="text-center">
-                    <img src={props.img} height={200} width={250} />
-                </div>
-                <div class="card-body ">
-                    <h5 class="card-title">{props.title}</h5>
-                    <h5 class="card-title">{props.price}</h5>
-                    <p class="card-text">{props.desc}</p>
-                    <button type='button' class="rm-button" 
-                    onClick={(e)=> {removeItem(e)}}>Remove</button>
-                    <button type='button' class="lm-button float-end">Checkout</button>
 
-                </div>
-            </div>
-        </div>
+      <div class="card mb-3" style={{maxwidth: 540}}>
+      <div class="row g-0">
+          <div class="col-md-2">
+              <img src={props.img} height={200} width={200} />
+          </div>
+              <div class="col-md-10">
+                  <div class="card-body">
+                      <div class="col-md-10">
+                          <div class="d-flex bd-highlight">
+                          <div class="p-2 flex-fill bd-highlight">
+                              <h4>{props.name}</h4>
+                              <div class="p-2 flex-fill bd-highlight"><h5>{props.title}</h5></div>
+                              <p class="text-decoration-underline">{props.desc}</p>
+                              
+                          </div>
+                          <div class="p-2 flex-fill bd-highlight"><h5>{props.price}</h5></div>
+                          <div class="p-2 bd-highlight"> 
+                            <button class="button" onClick={(e)=> {removeItem(e)}}>Remove</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      </div>
     );
 };
