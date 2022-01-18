@@ -29,15 +29,14 @@ export default function ShopBagItemCard(props) {
                       <div class="col-md-10">
                           <div class="d-flex bd-highlight">
                           <div class="p-2 flex-fill bd-highlight">
-                              <h4>{props.name}</h4>
-                              <div class="p-2 flex-fill bd-highlight"><h5>{props.title}</h5></div>
-                              <p class="text-decoration-underline">{props.desc}</p>
-                              
-                          </div>
-                          <div class="p-2 flex-fill bd-highlight"><h5>{props.price}</h5></div>
-                          <div class="p-2 bd-highlight"> 
-                            <button class="button" onClick={(e)=> {removeItem(e)}}>Remove</button>
-                          </div>
+                                  <h4>{props.name}</h4>
+                                  <div class="row "> 
+                                    <div class="col-md-5  text-decoration-underline">{props.des}</div>
+                                    <div class="col-md-2   "><h5>{props.price}</h5></div>
+                                    <div class="col-md-3  ">{props.status}</div>
+                                    <div class="col-md-2"> <button class="button" onClick={(e)=> {removeItem(e)}}>Remove</button></div> 
+                                </div>
+                          </div> 
                       </div>
                   </div>
               </div>
