@@ -46,7 +46,7 @@ export default function Home() {
                   {charities.map((charity) => {
                       return (
                         <Carousel.Item interval={3000}>
-                          <img className="d-block w-100" src= {charity.char_image}/>
+                          <img className="d-block w-100 car-img" src= {charity.char_image}/>
                           <Carousel.Caption>
                           <h3>{charity.char_name}</h3>
                           <p>{charity.char_desc}</p>
