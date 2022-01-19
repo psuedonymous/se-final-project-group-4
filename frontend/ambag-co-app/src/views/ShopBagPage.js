@@ -6,10 +6,10 @@ import { displayShopBagItems } from "../apis/Get-apis";
 export default function ShopBagPage(props) {
   const [items, setItems] = useState([]);
 
+
   useEffect(() => {
     displayShopBagItems(setItems);
   })
-
 
     return (
         <>
@@ -20,7 +20,7 @@ export default function ShopBagPage(props) {
               </div>
               <div className="row justify-content-right">
                   {items.map((item) => {
-                      return (<ShopBagItemCard
+                      return ( <ShopBagItemCard
                         id = {item.i_id}
                         img={item.i_image} 
                         title={item.i_name} 

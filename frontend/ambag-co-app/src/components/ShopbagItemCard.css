@@ -9,3 +9,10 @@
   font-size: 13px;
   border-radius: 3px;
 }
+
+.my_checkbox {
+  width:4vw;
+  height:4vh;
+  margin-top: 15px;
+  margin-left: 10px;
+}
