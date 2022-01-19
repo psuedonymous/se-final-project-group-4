@@ -10,7 +10,7 @@ export default function CharityCard(props) {
                 </div>
                 <div class="card-body ">
                     <h5 class="card-title">{props.title}</h5>
-                    <h5 class="card-title">{props.price}</h5>
+                    <h5 class="card-title">{props.email}</h5>
                     <p class="card-text">{props.desc}</p>
                     <button type='button' class="lm-button">Learn More</button>
                 </div>
