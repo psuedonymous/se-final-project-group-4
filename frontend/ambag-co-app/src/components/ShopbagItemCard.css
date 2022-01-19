@@ -10,9 +10,10 @@
   border-radius: 3px;
 }
 
-.my_checkbox {
+.my-checkbox {
   width:4vw;
   height:4vh;
   margin-top: 15px;
   margin-left: 10px;
+  cursor: pointer;
 }

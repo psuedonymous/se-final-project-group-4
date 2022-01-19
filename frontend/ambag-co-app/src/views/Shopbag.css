@@ -1,0 +1,11 @@
+.checkout-button {
+  border-radius: 2px;
+  background-color: cornflowerblue;
+  border: none;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: white;
+
+}

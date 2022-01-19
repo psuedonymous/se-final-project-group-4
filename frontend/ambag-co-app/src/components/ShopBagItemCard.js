@@ -2,7 +2,6 @@ import React from 'react';
 import './ShopbagItemCard.css';
 import { useState } from 'react';
 
-// To change frontend layout/design
 export default function ShopBagItemCard(props) {
   const [check, setCheck] = useState(false);
 
@@ -22,13 +21,13 @@ export default function ShopBagItemCard(props) {
       console.error(err)
     })
   }
+
     return (
       
       <div class="card mb-3" style={{maxwidth: 540}}>
       <div class="row g-0">
           <div class="col-md-1 mt-5">
-              <input type="checkbox" className='my_checkbox' onClick={(e) => {handleCheckbox(e)} }/>
-             
+              <input type="checkbox" className='my-checkbox' onChange={(e) => {handleCheckbox(e)} }/>    
           </div>
           <div class="col-md-2">
               <img src={props.img} height={150} width={150} />
