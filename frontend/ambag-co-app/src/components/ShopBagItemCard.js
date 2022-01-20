@@ -3,11 +3,8 @@ import './ShopbagItemCard.css';
 import { useState } from 'react';
 
 export default function ShopBagItemCard(props) {
-  const [check, setCheck] = useState(false);
+  const [selected, setSelected] = useState(false);
 
-  const handleCheckbox = () => {
-    setCheck(!check);
-  }
 
   const removeItem = () => {
     new Promise((resolve, reject)=>{
@@ -22,12 +19,24 @@ export default function ShopBagItemCard(props) {
     })
   }
 
+  const handleOnChange = (event) => {
+    const isSelected = event.target.checked;
+    if(isSelected){
+      props.setCheckedItems([...(props.checkedItems), props.id]);
+    } else {
+      const index= props.checkedItems.indexOf(props.id);
+      props.checkedItems.splice(index, 1);
+      props.setCheckedItems(props.checkedItems)
+    }
+  }
+
     return (
       
       <div class="card mb-3" style={{maxwidth: 540}}>
       <div class="row g-0">
           <div class="col-md-1 mt-5">
-              <input type="checkbox" className='my-checkbox' onChange={(e) => {handleCheckbox(e)} }/>    
+              <input type="checkbox" className='my-checkbox' 
+                onChange={(e) => {handleOnChange(e);} }/>    
           </div>
           <div class="col-md-2">
               <img src={props.img} height={150} width={150} />
