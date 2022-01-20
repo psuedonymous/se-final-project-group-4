@@ -223,6 +223,20 @@ app.delete('/remove-shopbag-item/:id', (req, res) => {
 })
 
 
+//endpoint for search
+app.get('/search-items', (req, res) => {
+  const { keywords } = req.query;
+  new Promise((resolve, reject) => {
+    const result = db.query('SELECT * FROM items WHERE item_name ILIKE $1',
+    [`%${keywords}%`]);
+    resolve(result);
+    reject("Failed to get searched items");
+  }).then((result) => {
+    res.status(200).json(result.rows)
+  }).catch((err) => {
+    console.log(err)
+  })
+})
 
 
 app.listen(port, () => {
