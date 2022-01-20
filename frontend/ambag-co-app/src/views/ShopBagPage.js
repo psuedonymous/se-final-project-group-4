@@ -6,11 +6,12 @@ import './Shopbag.css';
 
 export default function ShopBagPage(props) {
   const [items, setItems] = useState([]);
-
+  const [checkedItems, setCheckedItems] = useState([]);
 
   useEffect(() => {
     displayShopBagItems(setItems);
   })
+
 
     return (
         <>
@@ -21,12 +22,15 @@ export default function ShopBagPage(props) {
               </div>
               <div className="row justify-content-right">
                   {items.map((item) => {
-                      return ( <ShopBagItemCard
+                      return ( 
+                      <ShopBagItemCard
                         id = {item.i_id}
                         img={item.i_image} 
                         title={item.i_name} 
                         desc={item.i_desc} 
-                        price={item.i_price} />)
+                        price={item.i_price} 
+                        checkedItems= {checkedItems}
+                        setCheckedItems={setCheckedItems} />)
                   })}
               </div>
           </section>
