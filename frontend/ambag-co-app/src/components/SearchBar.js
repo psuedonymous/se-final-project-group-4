@@ -1,11 +1,9 @@
 import './SearchBar.css';
 import { useState, useEffect } from 'react';
-import ItemCard from './ItemCard';
 
 
-export default function SearchBar({ placeholder, data }) {
+export default function SearchBar({ placeholder, results}) {
   const [keyword, setKeyword] = useState('');
-  const [searchResult, setSearchResult] = useState([]);
 
   const onSubmitSearch = (e) => {
     e.preventDefault();
@@ -20,8 +18,7 @@ export default function SearchBar({ placeholder, data }) {
           resolve(jsonData);
         })
           .then((jsonData) => {
-            setSearchResult(jsonData);
-            console.log(jsonData);
+            results(jsonData);
           })
       })
   }
@@ -44,19 +41,6 @@ export default function SearchBar({ placeholder, data }) {
                     </button>
                 </span>
             </div>
-
-{/* result display test */}
-
-            {/* <div className="row justify-content-right">
-                  {searchResult.map((result) => {
-                      return (<ItemCard
-                        id = {result.item_id} 
-                        img={result.item_image} 
-                        title={result.item_name} 
-                        desc={result.item_desc} 
-                        price={result.item_price} />)
-                  })}
-            </div> */}
      </div>
     )
 }

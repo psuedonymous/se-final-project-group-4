@@ -3,8 +3,17 @@ import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
 import { MenuItems } from '../assets/MenuItems';
 import SearchBar from './SearchBar';
 import './NavBar.css';
+import { useState } from 'react';
 
-export function NavBar() {
+export function NavBar({toDisplay, results}) {
+
+  const displaySearch = (toDisplay) => {
+    if(toDisplay){
+      return  <SearchBar placeholder="Search"
+      results={results} />
+    }
+  }
+
   return (
     <Navbar bg="blue" variant="light" sticky="top" expand="sm" collapseOnSelect>
       <div className="container-fluid">
@@ -25,7 +34,8 @@ export function NavBar() {
             })}
           </Nav>
         </Navbar.Collapse>
-        <SearchBar placeholder="Search" />
+        {displaySearch(toDisplay)}
+        {/* <SearchBar placeholder="Search"/> */}
         <Nav className="ms-auto">
           <Link to="/inbox" className="nav-link">
             <span> <i className='far fa-envelope fa-lg'></i> </span>
