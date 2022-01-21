@@ -3,9 +3,16 @@ import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
 import { MenuItems } from '../assets/MenuItems';
 import SearchBar from './SearchBar';
 import './NavBar.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Avatar from 'react-avatar';
+import { displayProfile } from '../apis/Get-apis';
 
 export function NavBar({toDisplay, results}) {
+  const [profilePic, setProfilePic] = useState([]);
+
+  useEffect(() => {
+    displayProfile(setProfilePic)
+  })
 
   const displaySearch = (toDisplay) => {
     if(toDisplay){
@@ -49,7 +56,7 @@ export function NavBar({toDisplay, results}) {
         <Nav>
           <NavDropdown title={
             <span>
-              <i className='fas fa-user-circle fa-lg' ></i>
+              <Avatar className='avatar' name="ME" src={`${profilePic.map(pic=>{return pic.acc_image})}`}/>
             </span>} renderMenuOnMount={true} align="end">
             <NavDropdown.Item>
               <Link to='/my-profile' className="nav-link nav-drop-link">My Profile</Link>

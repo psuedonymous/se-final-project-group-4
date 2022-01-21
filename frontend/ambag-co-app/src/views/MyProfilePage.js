@@ -15,7 +15,7 @@ export default function MyProfilePage() {
 
     return (
         <>
-            <NavBar/>
+            <NavBar />
 
             <div class="container">
                 <div class ="row-d-flex center">
