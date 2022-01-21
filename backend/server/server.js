@@ -239,6 +239,56 @@ app.get('/search-items', (req, res) => {
 })
 
 
+
+//endpoint for editing profile
+app.post("/edit-profile", (req, response) => {
+  // collected image from a user
+  const data = {
+    image: req.body.image
+  }
+ 
+  // upload image here NOTE: user_id to update
+  cloudinary.uploader.upload(data.image,{
+    upload_preset: 'profile_pics'
+ })
+  .then((image) => {
+    new Promise((resolve, reject) => {
+      const result = db.query("INSERT INTO accounts(user_id, acc_username, acc_email, acc_password, acc_image) VALUES($1, $2, $3, $4, $5) RETURNING *",
+      [1, req.body.acc_username, req.body.acc_email, req.body.acc_password, image.secure_url]);
+      resolve(result)   
+    }).then((result)=>console.log(result.rows[0]))
+  }).then(
+    response.status(201).send({
+      status: "success",
+      data: {
+        message: "Image Uploaded Successfully",
+      },
+    })
+  )
+  .catch((error) => {
+    response.status(500).send({
+      message: "failure",
+      error,
+    });
+  });
+});
+
+
+// endpoint for getting profile NOTE to update acc_id when signup is done
+app.get('/get-profile', (req, res) => {
+  new Promise((resolve, reject) => {
+    const result = db.query('SELECT * FROM accounts WHERE acc_id = $1', [3])
+    resolve(result);
+    reject("Failed to get charities");
+  }).then((result) => {
+    res.status(200).json(result.rows)
+  }).catch((err) => {
+    console.log(err)
+  })
+})
+
+
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 })
