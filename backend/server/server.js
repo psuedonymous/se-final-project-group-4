@@ -4,6 +4,7 @@ const { cloudinary } = require('./utils/cloudinary');
 const express = require('express');
 const cors = require("cors");
 const db = require("./database");
+const { json } = require('express');
 const app = express();
 
 app.use(cors());
@@ -221,7 +222,20 @@ app.delete('/remove-shopbag-item/:id', (req, res) => {
   })
 })
 
+// endpoint for getting checked out items
+app.get('/checkout/:method', (req, res) => {
+  const { items } = req.query;
 
+  new Promise((resolve, reject) => {
+    const result = db.query('SELECT * FROM get_checked_out_items($1)', [items])
+    resolve(result)
+    reject('Failed to get checked out items.')
+  }).then((result) => {
+    res.status(200).json(result.rows)
+  }).catch((error) => {
+    console.log(error)
+  })
+})
 
 
 app.listen(port, () => {

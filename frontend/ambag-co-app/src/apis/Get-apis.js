@@ -74,3 +74,19 @@ export const displayShopBagItems = (setItems) => {
         })
     })
 }
+
+export const getCheckedOutItems = (checkedItems, setCheckedOutItems) => {
+  new Promise((resolve, reject) => {
+    const result = fetch(`http://localhost:5000/checkout/:method?items={${checkedItems}}`);
+    resolve(result)
+  }).then((result) => {
+    new Promise((resolve, reject) => {
+      const items = result.json();
+      resolve(items)
+    }).then((items) => {
+      setCheckedOutItems(items)
+    })
+  }).catch((error) => {
+    console.error(error)
+  })
+}
