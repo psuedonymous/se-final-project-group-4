@@ -22,7 +22,8 @@ app.get('/', (req, res) => {
 //getting all items (NOTE: To update shop_id when login/signup is fixed, exception of items to display)
 app.get('/getAllItems', (req,res) => {
   new Promise((resolve, reject) => {
-    const result = db.query("SELECT * FROM items WHERE item_id NOT IN (SELECT UNNEST(items_list) FROM shopbags) ORDER BY item_id ASC");
+    const result = db.query("SELECT * FROM items WHERE item_id NOT IN (SELECT UNNEST(items_list) FROM shopbags) AND shop_id != $1 ORDER BY item_id ASC",
+    [1]);
     resolve(result);
     reject("Failed to get all items");
   })
@@ -158,7 +159,7 @@ app.post("/post-item", (req, response) => {
   .then((image) => {
     new Promise((resolve, reject) => {
       const result = db.query("INSERT INTO items(cat_id, shop_id, item_name, item_price, item_desc, item_exp_date, item_date_posted, char_id, item_image, item_cloudinary_id) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *",
-      [req.body.item_charity, req.body.shop_id , req.body.item_name ,req.body.item_price , req.body.item_desc,
+      [req.body.cat_id, req.body.shop_id , req.body.item_name ,req.body.item_price , req.body.item_desc,
       req.body.item_exp_date , req.body.item_date_posted , req.body.char, image.secure_url, image.public_id]);
       resolve(result)   
     }).then((result)=>console.log(result.rows[0]))
