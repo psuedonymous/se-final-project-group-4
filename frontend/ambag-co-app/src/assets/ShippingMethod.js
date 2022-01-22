@@ -1,15 +1,15 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-export const ShippingMethodIndicator = () => {
+export const ShippingMethodIndicator = ({selectedItems}) => {
     const  methods = [
         {   
             title: 'Deliver',
-            path: '/checkout/deliver',
+            path: `/checkout/deliver?items=${selectedItems}`,
         },
         {   
             title: 'Pick Up',
-            path: '/checkout/pick-up',
+            path: `/checkout/pick-up?items=${selectedItems}`,
         },
     ]
 

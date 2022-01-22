@@ -4,12 +4,14 @@ import { useState, useEffect } from "react";
 import { displayShopBagItems } from "../apis/Get-apis";
 import { useNavigate } from "react-router-dom";
 import './Shopbag.css';
+import { createBrowserHistory } from "history";
 
-export default function ShopBagPage(props) {
+export default function ShopBagPage() {
   const [items, setItems] = useState([]);
   const [checkedItems, setCheckedItems] = useState([]);
 
   const navigate = useNavigate();
+  const history = createBrowserHistory();
 
   const navigateToShop = (e) => {
     e.preventDefault();
@@ -18,8 +20,13 @@ export default function ShopBagPage(props) {
 
   useEffect(() => {
     displayShopBagItems(setItems);
-  })
+  }, [])
 
+  const handleCheckout = (checkedItems) => (e) => {
+    e.preventDefault();
+    console.log(checkedItems)
+    history.push(`/checkout/deliver?items=${checkedItems.toString()}`, {checkedItems : checkedItems.toString()})
+  }
 
   return (
     <>
@@ -37,7 +44,7 @@ export default function ShopBagPage(props) {
           </div>
         </div> : <div>
           <section className="py-4 container" >
-            <div class="row">
+            <div className="row">
             </div>
             <div className="row justify-content-right">
               {items.map((item) => {
@@ -55,7 +62,8 @@ export default function ShopBagPage(props) {
           </section>
           <section>
             <div className="col-md-11">
-              <button type="button" className="float-end mb-5 checkout-button">Checkout</button>
+              <button type="button" className="float-end mb-5 checkout-button"
+              onClick={handleCheckout(checkedItems)}>Checkout</button>
             </div>
           </section>
         </div>}
