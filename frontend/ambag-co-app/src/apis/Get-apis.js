@@ -90,3 +90,19 @@ export const getCheckedOutItems = (checkedItems, setCheckedOutItems) => {
     console.error(error)
   })
 }
+
+export const getSubtotal = (checkedItems, setSubtotal) => {
+  new Promise((resolve, reject) => {
+    const result = fetch(`http://localhost:5000/subtotal?items={${checkedItems}}`);
+    resolve(result)
+  }).then((result) => {
+    new Promise((resolve, reject) => {
+      const subtotal = result.json();
+      resolve(subtotal)
+    }).then((subtotal) => {
+      setSubtotal(parseInt(subtotal[0].subtotal))
+    })
+  }).catch((error) => {
+    console.error(error)
+  })
+}

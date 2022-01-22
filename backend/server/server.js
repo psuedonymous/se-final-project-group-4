@@ -237,6 +237,21 @@ app.get('/checkout/:method', (req, res) => {
   })
 })
 
+// endpoint for getting subtotal of checked out items
+app.get('/subtotal', (req, res) => {
+  const { items } = req.query;
+
+  new Promise((resolve, reject) => {
+    const result = db.query('SELECT SUM(i_price) AS subtotal FROM get_checked_out_items($1)', [items])
+    resolve(result)
+    reject('Failed to get subtotal of checked out items.')
+  }).then((result) => {
+    res.status(200).json(result.rows)
+  }).catch((error) => {
+    console.log(error)
+  })
+})
+
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
