@@ -1,79 +1,44 @@
+import React from "react";
+import { useEffect, useState } from "react";
+import { getAddress, getCheckedOutItems, getShopName, getSubtotal } from "../../apis/Get-apis";
+import CheckoutCard from "../../components/CheckoutItemCard";
+
 export default function Pickup() {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const items = urlParams.get('items');
+
     const shippingFee = 0;
-    
+    const [checkedOutItems, setCheckedOutItems] = useState([]);
+    const [subtotal, setSubtotal] = useState([])
+    const [sellerAddress, setSellerAddress] = useState([]);
+    const [shopName, setShopName] = useState([]);
+    const [paymentMethod, setPaymentMethod] = useState('Cash on Pick up');
+
+    useEffect(() => {
+        getCheckedOutItems(items, setCheckedOutItems)
+        getSubtotal(items, setSubtotal)
+        getAddress(setSellerAddress)
+        getShopName(items, setShopName)
+    }, []);
+
     return (
-        <>
-            <div className="row m-3">
-                <div className="row address">
-                    <div className="row">
-                        <div className="col-lg-11 col-10">
-                            <p className="mt-3">Ledesma, Jaro</p> {/* seller's address */}
-                        </div>
-                        <div className="col-lg-1 col-2">
-                            <i className="fas fa-edit mt-3 float-end"></i>
-                        </div>
-                    </div>
-                </div>
+        <div>
+            {<CheckoutCard
+                address={sellerAddress}
+                shopName={shopName}
+                items={checkedOutItems}
+                paymentMethod={paymentMethod}
+                subtotal={subtotal}
+                shippingFee={shippingFee}
+                totalAmount={subtotal + shippingFee}
+            />}
+            <div className="row mt-2 m-1">
+                <button
+                    type="submit"
+                    className='btn checkout-btn col-6 col-lg-3 ms-auto float-end m-4'>Place Order
+                </button>
             </div>
-            <div className="row m-3">
-                <div className="row headings">
-                    <div className="col-lg-8 col-5">
-                        <p className="mt-3">K Store</p>
-                    </div>
-                    <div className="col-lg-2 col-4">
-                        <p className="mt-3 float-end">Unit Price</p>
-                    </div>
-                    <div className="col-lg-2 col-3">
-                        <p className="mt-3 float-end">Qty</p>
-                    </div>
-                </div>
-            </div>
-            <div className="row m-3">
-                <div className="row payment-method">
-                    <div className="row">
-                        <div className="col-lg-9 col-5">
-                            <p className="mt-3">Payment Method</p>
-                        </div>
-                        <div className="col-lg-2 col-5">
-                            <p className="mt-3">Cash on Pickup</p>
-                        </div>
-                        <div className="col-lg-1 col-2">
-                            <i className="fas fa-edit mt-3 float-end"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="row m-3">
-                <div className="row payment-method">
-                    <div className="col-lg-7 col-1"></div>
-                    <div className="col-lg-5 col-11">
-                    <div className="row">
-                            <div className="col-lg-7 col-6">
-                                <p className="mt-2 float-end">Subtotal</p>
-                            </div>
-                            <div className="col-lg-5 col-6">
-                                <p className="float-end mt-2"></p> {/*total of all ordered items*/}
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-lg-7 col-6">
-                                <p className="float-end">Shipping Fee</p>
-                            </div>
-                            <div className="col-lg-5 col-6">
-                                <p className="float-end">{shippingFee}</p>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-lg-7 col-6">
-                                <p className="float-end">Total Amount</p>
-                            </div>
-                            <div className="col-lg-5 col-6">
-                                <p className="float-end"></p> {/*subtotal + sf*/}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </>
+        </div>
     )
 }
