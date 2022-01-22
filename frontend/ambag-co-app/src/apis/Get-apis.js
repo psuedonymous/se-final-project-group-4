@@ -106,3 +106,35 @@ export const getSubtotal = (checkedItems, setSubtotal) => {
     console.error(error)
   })
 }
+
+export const getAddress = (setAddress) => {
+  new Promise((resolve, reject) => {
+    const result = fetch('http://localhost:5000/get-address');
+    resolve(result)
+  }).then((result) => {
+    new Promise((resolve, reject) => {
+      const address = result.json();
+      resolve(address)
+    }).then((address) => {
+      setAddress(address[0].addr)
+    })
+  }).catch((error) => {
+    console.error(error)
+  })
+}
+
+export const getShopName = (checkedItems, setShopName) => {
+  new Promise((resolve, reject) => {
+    const result = fetch(`http://localhost:5000/get-shopName?items={${checkedItems}}`);
+    resolve(result)
+  }).then((result) => {
+    new Promise((resolve, reject) => {
+      const shopname = result.json();
+      resolve(shopname)
+    }).then((shopname) => {
+      setShopName(shopname[0].s_name)
+    })
+  }).catch((error) => {
+    console.error(error)
+  })
+}
