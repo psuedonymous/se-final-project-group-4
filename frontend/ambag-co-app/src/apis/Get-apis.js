@@ -138,3 +138,19 @@ export const getShopName = (checkedItems, setShopName) => {
     console.error(error)
   })
 }
+
+export const getCharity = (checkedItems, setCharity) => {
+  new Promise((resolve, reject) => {
+    const result = fetch(`http://localhost:5000/get-charity?items={${checkedItems}}`);
+    resolve(result)
+  }).then((result) => {
+    new Promise((resolve, reject) => {
+      const charity = result.json();
+      resolve(charity)
+    }).then((charity) => {
+      setCharity(charity[0].chr_id)
+    })
+  }).catch((error) => {
+    console.error(error)
+  })
+}

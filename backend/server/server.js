@@ -279,7 +279,38 @@ app.get('/get-shopName', (req, res) => {
     console.log(error)
   })
 })
-''
+
+// endpoint for getting charity
+app.get('/get-charity', (req, res) => {
+  const { items } = req.query;
+
+  new Promise((resolve, reject) => {
+    const result = db.query('SELECT DISTINCT char_id AS chr_id FROM items, get_checked_out_items($1) WHERE char_id = c_id', [items])
+    resolve(result)
+    reject("Failed to get charity.")
+  }).then((result) => {
+    res.status(200).json(result.rows)
+  }).catch((error) => {
+    console.log(error)
+  })
+})
+
+// endpoint for placing an order
+app.post('/place-order', (req, res) => {
+  new Promise((resolve, reject) => {
+    const result = db.query('INSERT INTO donations(char_id, don_amount, don_dot, don_status) VALUES($1, $2, $3, $4) RETURNING *', 
+    [req.body.c_id, req.body.d_amt, req.body.d_dot, req.body.d_stat])
+    resolve(result)
+    reject("Failed to place an order.")
+  }).then((result) => {
+    res.status(200).send({
+      status: "Success",
+      message : "Successfully placed an order"
+    })
+  }).catch((error) => {
+    console.log(error)
+  })
+})
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

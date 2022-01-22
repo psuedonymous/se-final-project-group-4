@@ -1,0 +1,12 @@
+.goto-purchase-btn {
+    background-color: rgb(255, 255, 255, 0.6) !important;
+    color: rgba(65, 102, 234, 0.7) !important;
+    font-weight: 800!important;
+    align-self: center;
+}
+
+.confirmation-msg {
+    text-align: center;
+    color: white;
+}
+
