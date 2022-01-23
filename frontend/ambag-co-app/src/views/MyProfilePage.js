@@ -34,7 +34,7 @@ export default function MyProfilePage() {
                                 <h3 class ="mt-3 text-center">Information</h3>
                                 <button class="far fa-edit text-decoration-none text-color-black"
                                 onClick={() => setPostButton(true) }>Edit</button>
-                                {PostButton && <EditProfile popupButton={setPostButton} />}
+                                {PostButton && <EditProfile popupButton={setPostButton} accId={profile.map(acc=>{ return acc.acc_id})} />}
 
                                 <hr class ="badge-primary "/>
                                 <div class ="row">

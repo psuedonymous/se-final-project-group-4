@@ -76,6 +76,22 @@ export const displayShopBagItems = (setItems) => {
 }
 
 
+export const displayProfile = (setProfile) => {
+  new Promise((resolve, reject) => {
+    const res = fetch("http://localhost:5000/get-profile");
+    resolve(res)
+  }).then((res) => {
+    new Promise((resolve, reject) => {
+      const data = res.json();
+      resolve(data);
+    }).then((data) => {
+      setProfile(data);
+    })
+  })
+}
+
+
+
 export const getCheckedOutItems = (checkedItems, setCheckedOutItems) => {
   new Promise((resolve, reject) => {
     const result = fetch(`http://localhost:5000/checkout/:method?items={${checkedItems}}`);
