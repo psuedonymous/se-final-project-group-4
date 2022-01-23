@@ -89,3 +89,85 @@ export const displayProfile = (setProfile) => {
     })
   })
 }
+
+
+
+export const getCheckedOutItems = (checkedItems, setCheckedOutItems) => {
+  new Promise((resolve, reject) => {
+    const result = fetch(`http://localhost:5000/checkout/:method?items={${checkedItems}}`);
+    resolve(result)
+  }).then((result) => {
+    new Promise((resolve, reject) => {
+      const items = result.json();
+      resolve(items)
+    }).then((items) => {
+      setCheckedOutItems(items)
+    })
+  }).catch((error) => {
+    console.error(error)
+  })
+}
+
+export const getSubtotal = (checkedItems, setSubtotal) => {
+  new Promise((resolve, reject) => {
+    const result = fetch(`http://localhost:5000/subtotal?items={${checkedItems}}`);
+    resolve(result)
+  }).then((result) => {
+    new Promise((resolve, reject) => {
+      const subtotal = result.json();
+      resolve(subtotal)
+    }).then((subtotal) => {
+      setSubtotal(parseInt(subtotal[0].subtotal))
+    })
+  }).catch((error) => {
+    console.error(error)
+  })
+}
+
+export const getAddress = (setAddress) => {
+  new Promise((resolve, reject) => {
+    const result = fetch('http://localhost:5000/get-address');
+    resolve(result)
+  }).then((result) => {
+    new Promise((resolve, reject) => {
+      const address = result.json();
+      resolve(address)
+    }).then((address) => {
+      setAddress(address[0].addr)
+    })
+  }).catch((error) => {
+    console.error(error)
+  })
+}
+
+export const getShopName = (checkedItems, setShopName) => {
+  new Promise((resolve, reject) => {
+    const result = fetch(`http://localhost:5000/get-shopName?items={${checkedItems}}`);
+    resolve(result)
+  }).then((result) => {
+    new Promise((resolve, reject) => {
+      const shopname = result.json();
+      resolve(shopname)
+    }).then((shopname) => {
+      setShopName(shopname[0].s_name)
+    })
+  }).catch((error) => {
+    console.error(error)
+  })
+}
+
+export const getCharity = (checkedItems, setCharity) => {
+  new Promise((resolve, reject) => {
+    const result = fetch(`http://localhost:5000/get-charity?items={${checkedItems}}`);
+    resolve(result)
+  }).then((result) => {
+    new Promise((resolve, reject) => {
+      const charity = result.json();
+      resolve(charity)
+    }).then((charity) => {
+      setCharity(charity[0].chr_id)
+    })
+  }).catch((error) => {
+    console.error(error)
+  })
+}

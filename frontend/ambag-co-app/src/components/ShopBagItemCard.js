@@ -3,8 +3,6 @@ import './ShopbagItemCard.css';
 import { useState } from 'react';
 
 export default function ShopBagItemCard(props) {
-  const [selected, setSelected] = useState(false);
-
 
   const removeItem = () => {
     new Promise((resolve, reject)=>{
@@ -22,7 +20,7 @@ export default function ShopBagItemCard(props) {
   const handleOnChange = (event) => {
     const isSelected = event.target.checked;
     if(isSelected){
-      props.setCheckedItems([...(props.checkedItems), props.id]);
+      props.setCheckedItems([...(props.checkedItems), parseInt(props.id)]);
     } else {
       const index= props.checkedItems.indexOf(props.id);
       props.checkedItems.splice(index, 1);
