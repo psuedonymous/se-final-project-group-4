@@ -19,6 +19,8 @@ export default function Pickup() {
     const [placeOrderBtn, setPlaceOrderBtn] = useState(false);
     const totalAmount = subtotal + shippingFee;
 
+    const selectedItems = items.split(',').map((e) => parseInt(e)).join(',');
+
     const handlePlaceOrder = (e) => {
         e.preventDefault();
         placeOrder();
@@ -33,13 +35,24 @@ export default function Pickup() {
                     c_id : charity,
                     d_amt: totalAmount,
                     d_dot: new Date(),
-                    d_stat: 'reserved'
+                    d_stat: 'reserved',
                 }),
                 headers: { 'Content-type': 'Application/json' }
             })
             resolve(result)
             reject('Failed to place an order.')
         })
+        // update item's don_id
+        new Promise((resolve, reject) => {
+            const response = fetch(`http://localhost:5000/update-don-id?items={${selectedItems}}`, {
+               method: "PUT",
+               headers: { "Content-Type": "application/json" }
+        })
+        resolve(response);
+        reject("Failed to update item's don_id");
+        }).catch((err) => {
+            console.error(err)
+         })
     }
 
     useEffect(() => {

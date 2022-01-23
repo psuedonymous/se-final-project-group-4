@@ -312,7 +312,23 @@ app.post('/place-order', (req, res) => {
   })
 })
 
+
+//endpoint for updating an item's don_id
+app.put("/update-don-id", (req, res) => {
+  const { items } = req.query;
+
+  new Promise((resolve, reject) => {
+    const result = db.query('CALL update_don_id($1)', [items]);
+    resolve(result);
+  })
+    .then(() => {
+      console.log(`Succesfully updated item's donation id.`)
+    })
+    .catch((error) => {
+      console.error(error)
+    })
+})
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 })
-
