@@ -8,6 +8,9 @@ import AboutUsPage from './views/AboutUsPage';
 import ShopBagPage from './views/ShopBagPage';
 import MyProfilePage from './views/MyProfilePage';
 import MyShopPage from './views/my-shop/MyShopPage'
+import CheckoutPage from './views/checkout/CheckoutPage';
+import Deliver from './views/checkout/DeliverTab';
+import Pickup from './views/checkout/PickupTab';
 
 export default function App() {
   return (
@@ -20,7 +23,11 @@ export default function App() {
         <Route path="/about-us" element={<AboutUsPage />} />
         <Route path="/shop-bag" element={<ShopBagPage />} />
         <Route path="/my-profile" element={<MyProfilePage />} />
-        <Route path="/my-shop" element={<MyShopPage />} />
+        <Route path="/my-shop/*" element={<MyShopPage />} />
+        <Route path="/checkout" element={<CheckoutPage />}>
+          <Route path="deliver" element={<Deliver />}/>
+          <Route path="pick-up" element={<Pickup />}/>
+        </Route>
       </Routes>
   </BrowserRouter>
   );

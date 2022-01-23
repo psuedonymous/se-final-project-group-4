@@ -16,3 +16,22 @@
   transition: all 0.3s ease-out;
   font-weight: 800;
 }
+
+.container .status-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.container .no-items-status {
+  width: 100%;
+  min-height: 500px;
+}
+
+.empty-bag-status{
+  min-height: 500px;
+}
+
+.shop-btn {
+  background-color: rgb(155, 177, 236, 0.8) !important;
+} 

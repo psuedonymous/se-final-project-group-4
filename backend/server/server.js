@@ -4,6 +4,7 @@ const { cloudinary } = require('./utils/cloudinary');
 const express = require('express');
 const cors = require("cors");
 const db = require("./database");
+const { json } = require('express');
 const app = express();
 
 app.use(cors());
@@ -222,72 +223,94 @@ app.delete('/remove-shopbag-item/:id', (req, res) => {
   })
 })
 
+// endpoint for getting checked out items
+app.get('/checkout/:method', (req, res) => {
+  const { items } = req.query;
 
-//endpoint for search
-app.get('/search-items', (req, res) => {
-  const { keywords } = req.query;
   new Promise((resolve, reject) => {
-    const result = db.query('SELECT * FROM items WHERE item_name ILIKE $1',
-    [`%${keywords}%`]);
-    resolve(result);
-    reject("Failed to get searched items");
+    const result = db.query('SELECT * FROM get_checked_out_items($1)', [items])
+    resolve(result)
+    reject('Failed to get checked out items.')
   }).then((result) => {
     res.status(200).json(result.rows)
-  }).catch((err) => {
-    console.log(err)
+  }).catch((error) => {
+    console.log(error)
   })
 })
 
+// endpoint for getting subtotal of checked out items
+app.get('/subtotal', (req, res) => {
+  const { items } = req.query;
 
+  new Promise((resolve, reject) => {
+    const result = db.query('SELECT SUM(i_price) AS subtotal FROM get_checked_out_items($1)', [items])
+    resolve(result)
+    reject('Failed to get subtotal of checked out items.')
+  }).then((result) => {
+    res.status(200).json(result.rows)
+  }).catch((error) => {
+    console.log(error)
+  })
+})
 
-//endpoint for editing profile
-app.post("/edit-profile", (req, response) => {
-  // collected image from a user
-  const data = {
-    image: req.body.image
-  }
- 
-  // upload image here NOTE: user_id to update
-  cloudinary.uploader.upload(data.image,{
-    upload_preset: 'profile_pics'
- })
-  .then((image) => {
-    new Promise((resolve, reject) => {
-      const result = db.query("INSERT INTO accounts(user_id, acc_username, acc_email, acc_password, acc_image) VALUES($1, $2, $3, $4, $5) RETURNING *",
-      [1, req.body.acc_username, req.body.acc_email, req.body.acc_password, image.secure_url]);
-      resolve(result)   
-    }).then((result)=>console.log(result.rows[0]))
-  }).then(
-    response.status(201).send({
-      status: "success",
-      data: {
-        message: "Image Uploaded Successfully",
-      },
+// endpoint for getting user's address
+app.get('/get-address', (req, res) => {
+  new Promise((resolve, reject) => {
+    const result = db.query('SELECT user_addr AS addr FROM users WHERE user_id = $1 ', [1])
+    resolve(result)
+    reject("Failed to get user's address.")
+  }).then((result) => {
+    res.status(200).json(result.rows)
+  }).catch((error) => {
+    console.log(error)
+  })
+})
+
+// endpoint for getting shop name
+app.get('/get-shopName', (req, res) => {
+  const { items } = req.query;
+  new Promise((resolve, reject) => {
+    const result = db.query('SELECT shop_name AS s_name FROM shops, get_checked_out_items($1) WHERE shop_id = s_id', [items])
+    resolve(result)
+    reject("Failed to get shop name.")
+  }).then((result) => {
+    res.status(200).json(result.rows)
+  }).catch((error) => {
+    console.log(error)
+  })
+})
+
+// endpoint for getting charity
+app.get('/get-charity', (req, res) => {
+  const { items } = req.query;
+
+  new Promise((resolve, reject) => {
+    const result = db.query('SELECT DISTINCT char_id AS chr_id FROM items, get_checked_out_items($1) WHERE char_id = c_id', [items])
+    resolve(result)
+    reject("Failed to get charity.")
+  }).then((result) => {
+    res.status(200).json(result.rows)
+  }).catch((error) => {
+    console.log(error)
+  })
+})
+
+// endpoint for placing an order
+app.post('/place-order', (req, res) => {
+  new Promise((resolve, reject) => {
+    const result = db.query('INSERT INTO donations(char_id, don_amount, don_dot, don_status) VALUES($1, $2, $3, $4) RETURNING *', 
+    [req.body.c_id, req.body.d_amt, req.body.d_dot, req.body.d_stat])
+    resolve(result)
+    reject("Failed to place an order.")
+  }).then((result) => {
+    res.status(200).send({
+      status: "Success",
+      message : "Successfully placed an order"
     })
-  )
-  .catch((error) => {
-    response.status(500).send({
-      message: "failure",
-      error,
-    });
-  });
-});
-
-
-// endpoint for getting profile NOTE to update acc_id when signup is done
-app.get('/get-profile', (req, res) => {
-  new Promise((resolve, reject) => {
-    const result = db.query('SELECT * FROM accounts WHERE acc_id = $1', [3])
-    resolve(result);
-    reject("Failed to get charities");
-  }).then((result) => {
-    res.status(200).json(result.rows)
-  }).catch((err) => {
-    console.log(err)
+  }).catch((error) => {
+    console.log(error)
   })
 })
-
-
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
