@@ -30,7 +30,7 @@ export default function EditProfile(props) {
   const postItem = (base64EncodedImage) => {
   
     new Promise((resolve, reject)=>{
-      const result = fetch('http://localhost:5000/edit-profile',{
+      const result = fetch('http://localhost:5000/upload-profile',{
         method: 'POST',
         body: JSON.stringify({image: base64EncodedImage,
           acc_username: username,
