@@ -269,7 +269,6 @@ app.get('/get-address', (req, res) => {
 // endpoint for getting shop name
 app.get('/get-shopName', (req, res) => {
   const { items } = req.query;
-
   new Promise((resolve, reject) => {
     const result = db.query('SELECT shop_name AS s_name FROM shops, get_checked_out_items($1) WHERE shop_id = s_id', [items])
     resolve(result)
