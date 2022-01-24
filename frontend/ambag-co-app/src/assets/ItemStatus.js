@@ -1,43 +1,45 @@
-const { NavLink } = require("react-bootstrap")
+import React from "react";
+import { NavLink } from "react-router-dom";
 
 export const PurchaseStatusIndicator = () => {
     const  status = [
         {   
             title: 'Reserved',
-            url: '/my-purchase/reserved',
+            path: '/my-purchase/reserved?status=reserved',
             cName: "fas fa-clipboard-check"
         },
         {   
             title: 'In Process',
-            url: '/my-purchase/in-process',
+            path: '/my-purchase/in-process?status=in-process',
             cName: "fas fa-box-open"
-        },
+        }, 
         {   
             title: 'Shipped',
-            url: '/my-purchase/shipped',
+            path: '/my-purchase/shipped?status=shipped',
             cName: "fas fa-shipping-fast"
         },
         {   
             title: 'Completed',
-            url: '/my-purhase/completed',
+            path: '/my-purchase/completed?status=completed',
             cName: "fas fa-hand-holding-heart"
         },
         {   
             title: 'Cancelled',
-            url: '/my-purchase/cancelled',
+            path: '/my-purchase/cancelled?status=cancelled',
             cName: "fas fa-times-circle"
         },
     ]
 
+    const displayStatus = status.map((stat) => {
+        return <NavLink to={stat.path}>
+            <i className={stat.cName}></i>
+            <p>{stat.title}</p>
+        </NavLink>
+    })
+
     return (
         <div className="statusIndicator">
-            {status.map((stat) => {
-                return <NavLink to={stat.url}>
-                    <i className={stat.cName}></i>
-                    <p>{stat.title}</p>
-                </NavLink>
-            })}
-
+            {displayStatus}
         </div>
     )
 }
@@ -46,77 +48,42 @@ export const DonationStatusIndicator = () => {
     const  status = [
         {   
             title: 'Reserved',
-            url: '/my-donation/reserved',
+            path: '/my-shop/my-donation/reserved?status=reserved',
             cName: "fas fa-clipboard-check"
         },
         {   
             title: 'In Process',
-            url: '/my-donation/in-process',
+            path: '/my-shop/my-donation/in-process?status=in-process',
             cName: "fas fa-box-open"
         },
         {   
             title: 'Shipped',
-            url: '/my-donation/shipped',
+            path: '/my-shop/my-donation/shipped?status=shipped',
             cName: "fas fa-shipping-fast"
         },
         {   
             title: 'Completed',
-            url: '/my-donation/completed',
+            path: '/my-shop/my-donation/completed?status=completed',
             cName: "fas fa-hand-holding-heart"
         },
         {   
             title: 'Cancelled',
-            url: '/my-donation/cancelled',
+            path: '/my-shop/my-donation/cancelled?status=cancelled',
             cName: "fas fa-times-circle"
         },
     ]
 
+    const displayStatus = status.map((stat) => {
+        return <NavLink to={stat.path}>
+            <i className={stat.cName}></i>
+            <p>{stat.title}</p>
+        </NavLink>
+
+    })
+
     return (
         <div className="statusIndicator">
-            {status.map((stat) => {
-                return <NavLink to={stat.url}>
-                    <i className={stat.cName}></i>
-                    <p>{stat.title}</p>
-                </NavLink>
-            })}
-
+             {displayStatus}
         </div>
     )
 }
-
-
-export const PurchaseProgressStatus = [
-    {
-        url: '/my-purchase/reserved'
-    },
-    {
-        url: '/my-purchase/in-process'
-    },
-    {
-        url: '/my-purchase/shipped'
-    },
-    {
-        url: '/my-purchase/completed'
-    },
-    {
-        url: '/my-purchase/cancelled'
-    },
-]
-
-export const DonationProgressStatus = [
-    {
-        url: '/my-donation/reserved'
-    },
-    {
-        url: '/my-donation/in-process'
-    },
-    {
-        url: '/my-donation/shipped'
-    },
-    {
-        url: '/my-donation/completed'
-    },
-    {
-        url: '/my-donation/cancelled'
-    },
-]

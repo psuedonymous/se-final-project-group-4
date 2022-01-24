@@ -3,8 +3,8 @@ import { NavBar } from "../../components/NavBar";
 import { MyItemCard } from "./MyItemCard";
 import PostItem from "./PostItem";
 import './MyShopPage.css';
-import { Route, Routes } from 'react-router-dom';
-import { DonationStatusIndicator, DonationProgressStatus } from '../../assets/ItemStatus';
+import {  Routes,  Route, Outlet } from 'react-router-dom';
+import { DonationStatusIndicator } from '../../assets/ItemStatus';
 import { displayItems } from '../../apis/Get-apis';
 
 export default function MyShopPage() {
@@ -36,7 +36,6 @@ export default function MyShopPage() {
           })}
         </div>
       </section>
-
       <button className="btn post-item-btn" onClick={() => setPostButton(true)}>+</button>
       {PostButton && <PostItem popupButton={setPostButton} />}
       <div className="row m-3">
@@ -45,11 +44,14 @@ export default function MyShopPage() {
           <div className='status-container mt-4'>
             <DonationStatusIndicator />
             <div className='status mt-4'>
-              {DonationProgressStatus.map((status) => {
-                return <Routes>
-                  <Route path={status.url}></Route>
-                </Routes>
-              })}
+              <Routes>
+                <Route path='/my-shop/my-donation/reserved'/>
+                <Route path='/my-shop/my-donation/in-process'/>
+                <Route path='/my-shop/my-donation/shipped'/>
+                <Route path='/my-shop/my-donation/cancelled'/>
+                <Route path='/my-shop/my-donation/completed'/>
+              </Routes>
+              <Outlet />
             </div>
           </div>
         </div>

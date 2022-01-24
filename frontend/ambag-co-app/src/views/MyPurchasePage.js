@@ -1,7 +1,7 @@
 import { NavBar } from "../components/NavBar";
-import { PurchaseProgressStatus, PurchaseStatusIndicator } from '../assets/ItemStatus'
-import { Route, Routes } from 'react-router-dom';
+import { PurchaseStatusIndicator } from '../assets/ItemStatus'
 import './MyPurchasePage.css';
+import { Routes, Route, Outlet } from "react-router-dom";
 
 export default function MyPurchasePage() {
     return (
@@ -11,11 +11,14 @@ export default function MyPurchasePage() {
                 <div className='status-container'>
                     <PurchaseStatusIndicator />
                     <div className='status mt-4'>
-                        {PurchaseProgressStatus.map((status) => {
-                            return <Routes>
-                                <Route path={status.url}></Route>
-                            </Routes>
-                        })}
+                        <Routes>
+                            <Route path='/my-purchase/reserved'/>
+                            <Route path='/my-purchase/in-process'/>
+                            <Route path='/my-purchase/shipped'/>
+                            <Route path='/my-purchase/completed'/>
+                            <Route path='/my-purchase/cancelled'/>
+                        </Routes>
+                        <Outlet />
                     </div>
                 </div>
             </div>
