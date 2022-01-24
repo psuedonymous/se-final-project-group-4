@@ -236,6 +236,8 @@ app.get('/checkout/:method', (req, res) => {
   }).catch((error) => {
     console.log(error)
   })
+
+  console.log(items)
 })
 
 // endpoint for getting subtotal of checked out items
@@ -313,6 +315,21 @@ app.post('/place-order', (req, res) => {
 })
 
 
+//endpoint for updating an item's don_id
+app.put("/update-don-id", (req, res) => {
+  const { items } = req.query;
+
+  new Promise((resolve, reject) => {
+    const result = db.query('CALL update_don_id($1)', [items]);
+    resolve(result);
+  })
+    .then(() => {
+      console.log(`Succesfully updated item's donation id.`)
+    })
+    .catch((error) => {
+      console.error(error)
+    })
+})
 
 //endpoint for search
 app.get('/search-items', (req, res) => {
@@ -402,7 +419,6 @@ app.post("/upload-profile", (req, response) => {
     });
 });
 
-
 // endpoint for getting profile NOTE to update acc_id when signup is done
 app.get('/get-profile', (req, res) => {
   new Promise((resolve, reject) => {
@@ -447,8 +463,6 @@ app.post('/signup', (req, res) => {
   }
 })
 
-
-
 app.post('/login', (req, res) => {
   const {email, password } = req.body
   if (email == '' || password == '') {
@@ -473,11 +487,50 @@ app.post('/login', (req, res) => {
   }
 })
 
+//endpoint for getting purchase
+app.get('/my-purchase/:status', (req, res) => {
+  const { status } = req.query;
 
+  new Promise((resolve, reject) => {
+    const result = db.query('SELECT * FROM get_my_purchase($1)', [status])
+    resolve(result)
+  }).then((result) => {
+    res.status(200).json(result.rows)
+  }).catch((error) => {
+    console.log(error)
+  })
+  console.log(status)
+})
 
+//endpoint for getting donation
+app.get('/my-shop/my-donation/:status', (req, res) => {
+  const { status } = req.query;
+
+  new Promise((resolve, reject) => {
+    const result = db.query('SELECT * FROM get_my_purchase($1)', [status])
+    resolve(result)
+  }).then((result) => {
+    res.status(200).json(result.rows)
+  }).catch((error) => {
+    console.log(error)
+  })
+  console.log(status)
+})
+
+//endpoint for getting updating don status
+app.put('/update-status', (req, res) => {
+
+  new Promise((resolve, reject) => {
+    const result = db.query('UPDATE donations SET don_status = $1 WHERE don_id = $2', [req.body.new_status, req.body.donId])
+    console.log(req.body.new_status)
+    console.log(req.body.donId)
+    resolve(result)
+  }).catch((error) => {
+    console.log(error)
+  })
+})
 
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 })
-

@@ -8,7 +8,7 @@ export default function ConfirmOrder({ popupButton }) {
     const navigate = useNavigate();
 
     const navigateToMyPurchasePage = () => {
-      navigate('/my-purchase/reserved');
+      navigate('/my-purchase/reserved?status=reserved');
     }
 
     return (
