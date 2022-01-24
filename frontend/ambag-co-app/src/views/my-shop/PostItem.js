@@ -11,9 +11,9 @@ export default function PostItem({ popupButton }) {
   const [itemName, setItemName] = useState('');
   const [itemPrice, setItemPrice] = useState(0);
   const [expiry, setExpiry] = useState();
-  const [charity, setCharity] = useState();
+  const [charity, setCharity] = useState(1);
   const [description, setDescription] = useState('');
-  const [category, setCategory] = useState();
+  const [category, setCategory] = useState(1);
   const [today, setToday] = useState(new Date());
   const [imageInput, setImageInput] = useState('');
   const [preview, setPreview] = useState('');
@@ -51,7 +51,7 @@ export default function PostItem({ popupButton }) {
           item_charity: charity,
           item_desc: description,
           cat_id: category,
-          shop_id: 1, //to update when sign in & signup is done
+          shop_id: 2, //to update when sign in & signup is done
           don_dot: today,
           item_date_posted: today,
           char: charity

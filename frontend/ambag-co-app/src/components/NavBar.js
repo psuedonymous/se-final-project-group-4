@@ -25,7 +25,7 @@ export function NavBar({toDisplay, results}) {
     <Navbar bg="blue" variant="light" sticky="top" expand="sm" collapseOnSelect>
       <div className="container-fluid">
         <Navbar.Brand className="d-none d-sm d-">
-          <Link to="/">
+          <Link to="/home">
             <img src="\uniqorn.png" alt="app-logo" width="30" height="35" />
           </Link>
         </Navbar.Brand>
@@ -66,7 +66,7 @@ export function NavBar({toDisplay, results}) {
             </NavDropdown.Item>
             <NavDropdown.Divider />
             <NavDropdown.Item>
-              <Link to='/logout' className="nav-link nav-drop-link">Logout</Link>
+              <Link to='/' className="nav-link nav-drop-link">Logout</Link>
             </NavDropdown.Item>
           </NavDropdown>
         </Nav>

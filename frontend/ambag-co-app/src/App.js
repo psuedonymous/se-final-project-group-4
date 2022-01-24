@@ -11,6 +11,9 @@ import MyShopPage from './views/my-shop/MyShopPage'
 import CheckoutPage from './views/checkout/CheckoutPage';
 import Deliver from './views/checkout/DeliverTab';
 import Pickup from './views/checkout/PickupTab';
+import WelcomePage from './views/WelcomePage'
+import SignupPage from './views/SignupPage';
+import LoginPage from './views/LoginPage'
 import ReservedPurchase from './views/my-purchase/ReservedPurchaseTab';
 import InProcessPurchase from './views/my-purchase/InProcessPurchaseTab';
 import ShippedPurchase from './views/my-purchase/ShippedPurchaseTab';
@@ -26,7 +29,10 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<WelcomePage />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/catalog" element={<CatalogPage />} />
         <Route path="/my-purchase" element={<MyPurchasePage />}>
           <Route path="reserved" element={<ReservedPurchase />}/>
@@ -47,10 +53,10 @@ export default function App() {
           <Route path="my-donation/cancelled" element={<CancelledDonation />}/>
         </Route>
         <Route path="/checkout" element={<CheckoutPage />}>
-          <Route path="deliver" element={<Deliver />}/>
-          <Route path="pick-up" element={<Pickup />}/>
+          <Route path="deliver" element={<Deliver />} />
+          <Route path="pick-up" element={<Pickup />} />
         </Route>
       </Routes>
-  </BrowserRouter>
+    </BrowserRouter>
   );
 }
