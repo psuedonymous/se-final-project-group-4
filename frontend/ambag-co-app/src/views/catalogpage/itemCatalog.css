@@ -1,0 +1,15 @@
+.item-card {
+    background: rgba(230, 230, 230, 0.5);
+}
+
+.img-box {
+    width: 100%;
+    align-self: center;
+}
+
+.card-img-top {
+    height: 12vw;
+    object-fit: cover;
+}
+
+
