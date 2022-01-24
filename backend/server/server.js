@@ -463,6 +463,20 @@ app.get('/my-shop/my-donation/:status', (req, res) => {
   console.log(status)
 })
 
+//endpoint for getting updating don status
+app.put('/update-status', (req, res) => {
+
+  new Promise((resolve, reject) => {
+    const result = db.query('UPDATE donations SET don_status = $1 WHERE don_id = $2', [req.body.new_status, req.body.donId])
+    console.log(req.body.new_status)
+    console.log(req.body.donId)
+    resolve(result)
+  }).catch((error) => {
+    console.log(error)
+  })
+})
+
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 })
