@@ -35,7 +35,7 @@ export default function Deliver() {
                     c_id : charity,
                     d_amt: totalAmount,
                     d_dot: new Date(),
-                    d_stat: 'reserved',
+                    d_stat: '{reserved}',
                 }),
                 headers: { 'Content-type': 'Application/json' }
             })
