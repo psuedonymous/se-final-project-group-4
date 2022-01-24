@@ -24,16 +24,14 @@
   margin: 0 auto;
   padding: 30px 0;
 }
-
-.my-donation .status-container {
+/* 
+.my-donation .status { 
   width: 100%;
-  min-height: 500px;
+  min-height: 350px;
   background: #fff;
   border-radius: 12px;
   box-shadow: 0px 3px 5px rgb(155, 177, 236, 0.6);
-  flex-direction: column;
-  justify-content: space-between;
-}
+}  */
 
 
 .statusIndicator {
@@ -65,7 +63,11 @@
 }
 
 .statusIndicator a:hover {
-  background: rgb(137, 160, 243, 0.4);
-  color: rgb(137, 160, 243);
+  background: rgb(137, 160, 243, 0.2);
+  color: rgb(137, 160, 243) !important;
   border-radius: 0px;
+}
+
+.no-status {
+  min-height: 350px;
 }
