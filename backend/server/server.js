@@ -236,6 +236,8 @@ app.get('/checkout/:method', (req, res) => {
   }).catch((error) => {
     console.log(error)
   })
+
+  console.log(items)
 })
 
 // endpoint for getting subtotal of checked out items
@@ -431,6 +433,35 @@ app.get('/get-profile', (req, res) => {
   })
 })
 
+//endpoint for getting purchase
+app.get('/my-purchase/:status', (req, res) => {
+  const { status } = req.query;
+
+  new Promise((resolve, reject) => {
+    const result = db.query('SELECT * FROM get_my_purchase($1)', [status])
+    resolve(result)
+  }).then((result) => {
+    res.status(200).json(result.rows)
+  }).catch((error) => {
+    console.log(error)
+  })
+  console.log(status)
+})
+
+//endpoint for getting donation
+app.get('/my-shop/my-donation/:status', (req, res) => {
+  const { status } = req.query;
+
+  new Promise((resolve, reject) => {
+    const result = db.query('SELECT * FROM get_my_purchase($1)', [status])
+    resolve(result)
+  }).then((result) => {
+    res.status(200).json(result.rows)
+  }).catch((error) => {
+    console.log(error)
+  })
+  console.log(status)
+})
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

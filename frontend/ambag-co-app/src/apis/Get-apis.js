@@ -171,3 +171,35 @@ export const getCharity = (checkedItems, setCharity) => {
     console.error(error)
   })
 }
+
+export const getPurchase = (status, setPurchases) => {
+  new Promise((resolve, reject) => {
+    const result = fetch(`http://localhost:5000/my-purchase/:status?status={${status}}`);
+    resolve(result)
+  }).then((result) => {
+    new Promise((resolve, reject) => {
+      const purchases = result.json();
+      resolve(purchases)
+    }).then((purchases) => {
+      setPurchases(purchases)
+    })
+  }).catch((error) => {
+    console.error(error)
+  })
+}
+
+export const getDonation = (status, setDonations) => {
+  new Promise((resolve, reject) => {
+    const result = fetch(`http://localhost:5000/my-shop/my-donation/:status?status={${status}}`);
+    resolve(result)
+  }).then((result) => {
+    new Promise((resolve, reject) => {
+      const donations = result.json();
+      resolve(donations)
+    }).then((donations) => {
+      setDonations(donations)
+    })
+  }).catch((error) => {
+    console.error(error)
+  })
+}
