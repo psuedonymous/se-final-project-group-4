@@ -20,10 +20,10 @@ app.get('/', (req, res) => {
 
 
 //getting all items (NOTE: To update shop_id when login/signup is fixed, exception of items to display)
-app.get('/getAllItems', (req,res) => {
+app.get('/getAllItems', (req, res) => {
   new Promise((resolve, reject) => {
     const result = db.query("SELECT * FROM items WHERE item_id NOT IN (SELECT UNNEST(items_list) FROM shopbags) AND shop_id != $1 ORDER BY item_id ASC",
-    [1]);
+      [1]);
     resolve(result);
     reject("Failed to get all items");
   })
@@ -85,30 +85,30 @@ app.put("/getItems/edit/:id", (req, res) => {
   const { id } = req.params;
   new Promise((resolve, reject) => {
     const result = db.query("UPDATE items SET item_name = $1, item_price = $2, item_desc =$3, item_exp_date= $4, cat_id= $5, char_id=$6 WHERE item_id = $7",
-    [req.body.itemName, req.body.itemPrice, req.body.itemDesc, req.body.itemExp, req.body.itemCategory, req.body.charity, id]);
+      [req.body.itemName, req.body.itemPrice, req.body.itemDesc, req.body.itemExp, req.body.itemCategory, req.body.charity, id]);
     resolve(result);
   })
   new Promise((resolve, reject) => {
     new Promise((resolve, reject) => {
       const cld_id = db.query("SELECT item_cloudinary_id FROM items WHERE item_id = $1", [id]);
       resolve(cld_id);
-    }).then((cld_id)=> {
+    }).then((cld_id) => {
       cloudinary.uploader.destroy(cld_id.rows[0].item_cloudinary_id);
-    }).then(()=>{
-      cloudinary.uploader.upload(req.body.preview,{
+    }).then(() => {
+      cloudinary.uploader.upload(req.body.preview, {
         upload_preset: 'ambag_co'
-     }).then((image) => {
-      const editItem = db.query("UPDATE items SET item_cloudinary_id = $1, item_image=$2 WHERE item_id = $3",
-      [ image.public_id, image.secure_url, id]);
-    
-    if (res.status(200)) {
-      resolve(editItem);
-    } else {
-      reject(`Failed to update item #${id}`);
-    }
-     })
+      }).then((image) => {
+        const editItem = db.query("UPDATE items SET item_cloudinary_id = $1, item_image=$2 WHERE item_id = $3",
+          [image.public_id, image.secure_url, id]);
+
+        if (res.status(200)) {
+          resolve(editItem);
+        } else {
+          reject(`Failed to update item #${id}`);
+        }
+      })
     })
-    
+
   })
     .then((editItem) => {
       console.log(`Succesfully updated item #${id}`)
@@ -151,40 +151,40 @@ app.post("/post-item", (req, response) => {
   const data = {
     image: req.body.image
   }
- 
+
   // upload image here
-  cloudinary.uploader.upload(data.image,{
+  cloudinary.uploader.upload(data.image, {
     upload_preset: 'ambag_co'
- })
-  .then((image) => {
-    new Promise((resolve, reject) => {
-      const result = db.query("INSERT INTO items(cat_id, shop_id, item_name, item_price, item_desc, item_exp_date, item_date_posted, char_id, item_image, item_cloudinary_id) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *",
-      [req.body.cat_id, req.body.shop_id , req.body.item_name ,req.body.item_price , req.body.item_desc,
-      req.body.item_exp_date , req.body.item_date_posted , req.body.char, image.secure_url, image.public_id]);
-      resolve(result)   
-    }).then((result)=>console.log(result.rows[0]))
-  }).then(
-    response.status(201).send({
-      status: "success",
-      data: {
-        message: "Image Uploaded Successfully",
-      },
-    })
-  )
-  .catch((error) => {
-    response.status(500).send({
-      message: "failure",
-      error,
+  })
+    .then((image) => {
+      new Promise((resolve, reject) => {
+        const result = db.query("INSERT INTO items(cat_id, shop_id, item_name, item_price, item_desc, item_exp_date, item_date_posted, char_id, item_image, item_cloudinary_id) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *",
+          [req.body.cat_id, req.body.shop_id, req.body.item_name, req.body.item_price, req.body.item_desc,
+          req.body.item_exp_date, req.body.item_date_posted, req.body.char, image.secure_url, image.public_id]);
+        resolve(result)
+      }).then((result) => console.log(result.rows[0]))
+    }).then(
+      response.status(201).send({
+        status: "success",
+        data: {
+          message: "Image Uploaded Successfully",
+        },
+      })
+    )
+    .catch((error) => {
+      response.status(500).send({
+        message: "failure",
+        error,
+      });
     });
-  });
 });
 
 //endpoint for adding to bag
 app.post("/add-to-bag", (req, response) => {
-  new Promise((resolve,reject) => {
+  new Promise((resolve, reject) => {
     const result = db.query('SELECT add_to_bag($1, $2)',
-     [req.body.account_no, req.body.item]);
-     resolve(result);
+      [req.body.account_no, req.body.item]);
+    resolve(result);
   }).then(
     response.status(201).send({
       status: "success",
@@ -298,14 +298,14 @@ app.get('/get-charity', (req, res) => {
 // endpoint for placing an order
 app.post('/place-order', (req, res) => {
   new Promise((resolve, reject) => {
-    const result = db.query('INSERT INTO donations(char_id, don_amount, don_dot, don_status) VALUES($1, $2, $3, $4) RETURNING *', 
-    [req.body.c_id, req.body.d_amt, req.body.d_dot, req.body.d_stat])
+    const result = db.query('INSERT INTO donations(char_id, don_amount, don_dot, don_status) VALUES($1, $2, $3, $4) RETURNING *',
+      [req.body.c_id, req.body.d_amt, req.body.d_dot, req.body.d_stat])
     resolve(result)
     reject("Failed to place an order.")
   }).then((result) => {
     res.status(200).send({
       status: "Success",
-      message : "Successfully placed an order"
+      message: "Successfully placed an order"
     })
   }).catch((error) => {
     console.log(error)
@@ -319,7 +319,7 @@ app.get('/search-items', (req, res) => {
   const { keywords } = req.query;
   new Promise((resolve, reject) => {
     const result = db.query('SELECT * FROM items WHERE item_name ILIKE $1',
-    [`%${keywords}%`]);
+      [`%${keywords}%`]);
     resolve(result);
     reject("Failed to get searched items");
   }).then((result) => {
@@ -334,30 +334,30 @@ app.put("/edit-profile/:id", (req, res) => {
   const { id } = req.params;
   new Promise((resolve, reject) => {
     const result = db.query("UPDATE accounts SET user_id = $1, acc_username = $2, acc_email =$3, acc_password= $4 WHERE acc_id = $5",
-    [1, req.body.acc_username, req.body.acc_email, req.body.acc_password, id]);
+      [1, req.body.acc_username, req.body.acc_email, req.body.acc_password, id]);
     resolve(result);
   })
   new Promise((resolve, reject) => {
     new Promise((resolve, reject) => {
       const cld_id = db.query("SELECT acc_cloudinary_id FROM accounts WHERE acc_id = $1", [id]);
       resolve(cld_id);
-    }).then((cld_id)=> {
+    }).then((cld_id) => {
       cloudinary.uploader.destroy(cld_id.rows[0].item_cloudinary_id);
-    }).then(()=>{
-      cloudinary.uploader.upload(req.body.preview,{
+    }).then(() => {
+      cloudinary.uploader.upload(req.body.preview, {
         upload_preset: 'profile_pics'
-     }).then((image) => {
-      const editProfile = db.query("UPDATE accounts SET acc_cloudinary_id = $1, acc_image=$2 WHERE acc_id = $3",
-      [ image.public_id, image.secure_url, id]);
-    
-    if (res.status(200)) {
-      resolve(editProfile);
-    } else {
-      reject(`Failed to update profile #${id}`);
-    }
-     })
+      }).then((image) => {
+        const editProfile = db.query("UPDATE accounts SET acc_cloudinary_id = $1, acc_image=$2 WHERE acc_id = $3",
+          [image.public_id, image.secure_url, id]);
+
+        if (res.status(200)) {
+          resolve(editProfile);
+        } else {
+          reject(`Failed to update profile #${id}`);
+        }
+      })
     })
-    
+
   })
     .then((editItem) => {
       console.log(`Succesfully updated item #${id}`)
@@ -375,31 +375,31 @@ app.post("/upload-profile", (req, response) => {
   const data = {
     image: req.body.image
   }
- 
+
   // upload image here NOTE: user_id to update
-  cloudinary.uploader.upload(data.image,{
+  cloudinary.uploader.upload(data.image, {
     upload_preset: 'profile_pics'
- })
-  .then((image) => {
-    new Promise((resolve, reject) => {
-      const result = db.query("INSERT INTO accounts(user_id, acc_username, acc_email, acc_password, acc_image, acc_cloudinary_id) VALUES($1, $2, $3, $4, $5, $6) RETURNING *",
-      [1, req.body.acc_username, req.body.acc_email, req.body.acc_password, image.secure_url, image.public_id]);
-      resolve(result)   
-    }).then((result)=>console.log(result.rows[0]))
-  }).then(
-    response.status(201).send({
-      status: "success",
-      data: {
-        message: "Image Uploaded Successfully",
-      },
-    })
-  )
-  .catch((error) => {
-    response.status(500).send({
-      message: "failure",
-      error,
+  })
+    .then((image) => {
+      new Promise((resolve, reject) => {
+        const result = db.query("INSERT INTO accounts(user_id, acc_username, acc_email, acc_password, acc_image, acc_cloudinary_id) VALUES($1, $2, $3, $4, $5, $6) RETURNING *",
+          [1, req.body.acc_username, req.body.acc_email, req.body.acc_password, image.secure_url, image.public_id]);
+        resolve(result)
+      }).then((result) => console.log(result.rows[0]))
+    }).then(
+      response.status(201).send({
+        status: "success",
+        data: {
+          message: "Image Uploaded Successfully",
+        },
+      })
+    )
+    .catch((error) => {
+      response.status(500).send({
+        message: "failure",
+        error,
+      });
     });
-  });
 });
 
 
@@ -415,6 +415,66 @@ app.get('/get-profile', (req, res) => {
     console.log(err)
   })
 })
+
+app.post('/signup', (req, res) => {
+  const { username, email, password, firstName, lastName, contactNumber, dateOfBirth, type } = req.body
+
+  if (username == '' || email == '' || password == '' || firstName == '' || lastName == '' || contactNumber == '' || dateOfBirth == '' || type == '') {
+    res.json({ message: "Registration Failed" })
+  } else {
+    db.query("SELECT * FROM accounts WHERE acc_email = $1", [req.body.email])
+      .then((result) => {
+        if (result.rows.length > 0) {
+          res.json({ message: "User already exists" })
+        } else {
+          db.query("INSERT INTO users(user_fname, user_lname, user_cont_num, user_dob, user_type) VALUES ($1, $2, $3, $4, $5) RETURNING user_id",
+            [req.body.firstName, req.body.lastName, req.body.contactNumber, req.body.dateOfBirth, req.body.type])
+            .then((result) => {
+              db.query("INSERT INTO accounts(user_id, acc_username, acc_email, acc_password) VALUES ($1, $2, $3, $4)",
+                [result.rows[0].user_id, req.body.username, req.body.email, req.body.password])
+            })
+            .then((response) => {
+              res.json(response)
+            })
+            .catch((e) => {
+              console.log(e)
+            })
+        }
+
+      }).catch((e) => {
+        console.log(e)
+      })
+  }
+})
+
+
+
+app.post('/login', (req, res) => {
+  const {email, password } = req.body
+  if (email == '' || password == '') {
+    res.json({ message: "Login Failed" })
+  } else {
+    db.query("SELECT * FROM accounts WHERE acc_email = $1 AND acc_password = $2",
+      [req.body.email, req.body.password])
+      .then((result) => {
+        if (result.rows.length > 0) {
+          res.json({ auth: true, result: result })
+          db.query("INSERT INTO shops(user_id, shop_name) VALUES ($1,$2) ON CONFLICT DO NOTHING", [result.rows[0].user_id, "store"])
+          .catch((e)=>{
+            console.log(e)
+          })
+        } else {
+          res.json({ auth: false, message: "Wrong email/password" })
+        }
+      }).catch((e) => {
+        console.log(e)
+      })
+
+  }
+})
+
+
+
 
 
 app.listen(port, () => {
